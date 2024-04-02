@@ -1,0 +1,31 @@
+# this should go in a different file to avoid leaking secrets
+api:
+  url: CONFIGURE_ME
+  token: CONFIGURE_ME
+
+topic: univers-ecospheres
+
+organizations:
+  queries:
+    - ddt
+    - deal
+    - direction+departementale+territoire
+    - direction+regionale+environnement
+    - dreal
+  slugs:
+    - ademe
+    - agence-nationale-de-la-cohesion-des-territoires
+    - agence-nationale-de-lhabitat
+    - centre-scientifique-et-technique-du-batiment
+    - institut-francais-de-recherche-pour-lexploitation-de-la-mer
+    - institut-national-de-l-information-geographique-et-forestiere
+    - meteo-france
+    - ministere-de-l-egalite-des-territoires-et-du-logement
+    - ministere-de-la-transition-ecologique
+    - pole-national-de-donnees-de-biodiversite
+    - shom
+  skip:
+    - csw-moissonnable-dreal-npdc
+    - test-dreal-grand-est
+    - test-dreal-paca
+
