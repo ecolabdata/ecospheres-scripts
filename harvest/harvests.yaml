@@ -4,8 +4,11 @@ api:
   token: CONFIGURE_ME
 
 harvests:
-  backend: csw-iso-xslt-dcat
+  backend: csw-iso-19139
   endpoints:
+  - name: geoide-csw-dgaln
+    org:  ministere-de-la-transition-ecologique
+    url:  https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-dgaln
   - name: geoide-ddt01-csw
     org:  ddt-de-lain
     url:  https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt01
@@ -33,6 +36,10 @@ harvests:
   - name: geoide-ddt63-csw
     org:  direction-departementale-des-territoire-du-puy-de-dome
     url:  https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt63
+  # pas encore dispo
+  # - name: geoide-ddt69-csw
+  #   org:  direction-departementale-des-territoires-du-rhone-1
+  #   url:  https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt69
   - name: geoide-ddt73-csw
     org:  ddt-savoie
     url:  https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt73
