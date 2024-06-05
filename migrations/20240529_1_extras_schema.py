@@ -34,7 +34,7 @@ def migrate(slug: str = "", dry_run: bool = False):
             }
         }
         if not dry_run:
-            api.put(f"/api/1/topics/{bouquet['id']}/", data=payload)
+            api.put(f"/api/1/topics/{bouquet['id']}/", json=payload)
         else:
             print("Would have updated with:")
             print(json.dumps(payload, indent=2))
