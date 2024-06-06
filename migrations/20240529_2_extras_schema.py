@@ -23,11 +23,15 @@ def migrate(slug: str = "", dry_run: bool = False):
             for i in ["datasets_properties", "theme", "subtheme"]
         ]):
             raise ValueError("Bouquet not migrated")
-        payload = bouquet["extras"]
-        payload.pop("ecospheres:datasets_properties")
-        payload.pop("ecospheres:informations")
+        extras = bouquet["extras"]
+        extras.pop("ecospheres:datasets_properties")
+        extras.pop("ecospheres:informations")
+        payload = {
+            "tags": bouquet["tags"],
+            "extras": extras
+        }
         if not dry_run:
-            api.put(f"/api/1/topics/{bouquet['id']}/", data=payload)
+            api.put(f"/api/1/topics/{bouquet['id']}/", json=payload)
         else:
             print("Would have updated with:")
             print(json.dumps(payload, indent=2))
