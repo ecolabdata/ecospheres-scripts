@@ -11,7 +11,7 @@ class DatagouvfrAPI:
         ) or not (
             api_key := os.getenv("DATAGOUVFR_API_KEY")
         ) or not (
-            es_tag := os.getenv("ECOSPHERES_TAG")
+            es_tag := es_tag or os.getenv("ECOSPHERES_TAG")
         ):
             raise Exception("Missing env var(s).")
         self.base_url: str = base_url
