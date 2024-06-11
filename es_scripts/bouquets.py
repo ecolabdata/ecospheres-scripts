@@ -50,6 +50,7 @@ def copy(slug: str, source: str = "prod", destination: str = "demo"):
     destination_data["name"] = source_data["name"]
     destination_data["description"] = source_data["description"]
     destination_data["spatial"] = source_data["spatial"]
+    destination_data["private"] = source_data["private"]
 
     if source_data["owner"]:
         r = api_destination._get(f"/api/1/users/{source_data['owner']['id']}/")
