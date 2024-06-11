@@ -5,9 +5,9 @@ import requests
 
 class DatagouvfrAPI:
 
-    def __init__(self):
+    def __init__(self, base_url: str | None = None, es_tag: str | None = None):
         if not (
-            base_url := os.getenv("DATAGOUVFR_URL")
+            base_url := base_url or os.getenv("DATAGOUVFR_URL")
         ) or not (
             api_key := os.getenv("DATAGOUVFR_API_KEY")
         ) or not (
@@ -25,8 +25,11 @@ class DatagouvfrAPI:
     def url(self, endpoint):
         return f"{self.base_url}{endpoint}"
 
+    def _get(self, endpoint: str, **kwargs):
+        return requests.get(self.url(endpoint), **kwargs)
+
     def get(self, endpoint: str, **kwargs) -> dict:
-        r = requests.get(self.url(endpoint), **kwargs)
+        r = self._get(endpoint, **kwargs)
         r.raise_for_status()
         return r.json()
 
@@ -34,6 +37,14 @@ class DatagouvfrAPI:
         r = requests.put(self.url(endpoint), headers=self.headers, **kwargs)
         r.raise_for_status()
         return r.json()
+
+    def post(self, endpoint: str, **kwargs) -> dict:
+        r = requests.post(self.url(endpoint), headers=self.headers, **kwargs)
+        r.raise_for_status()
+        return r.json()
+
+    def get_bouquet(self, bouquet_id_or_slug: str) -> dict:
+        return self.get(f"/api/2/topics/{bouquet_id_or_slug}")
 
     def get_bouquets(self) -> list:
         r = self.get(

@@ -5,7 +5,7 @@ import json
 
 from minicli import cli, run
 
-from api import DatagouvfrAPI
+from es_scripts.api import DatagouvfrAPI
 
 
 api = DatagouvfrAPI()

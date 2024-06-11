@@ -16,6 +16,7 @@ export ECOSPHERES_TAG=ecospheres
 python3 -mvenv pyenv
 source pyenv/bin/activate
 pip install -r requirements.txt
+pip install -e .
 ```
 
 ## Scripts
@@ -39,7 +40,7 @@ XXX
 Première étape : duplication des anciens extras vers les nouveaux.
 
 ```shell
-python migrations/20240529_1_extras_schema.py migrate [--dry-run] [slug]
+python es_scripts/migrations/20240529_1_extras_schema.py migrate [--dry-run] [slug]
 ```
 
 Deuxième étape : déploiement de la version utilisant les nouveaux extras.
@@ -47,5 +48,15 @@ Deuxième étape : déploiement de la version utilisant les nouveaux extras.
 Troisème étape : suppression des anciens extras.
 
 ```shell
-python migrations/20240529_2_extras_schema.py migrate [--dry-run] [slug]
+python es_scripts/migrations/20240529_2_extras_schema.py migrate [--dry-run] [slug]
+```
+
+### Bouquets
+
+#### Copy
+
+Copie un bouquet d'un environnement à l'autre.
+
+```shell
+python es_scripts/bouquets.py copy itineraires-fraicheur [--source prod] [--destination demo]
 ```
