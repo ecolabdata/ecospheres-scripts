@@ -2,21 +2,21 @@ import os
 
 import requests
 
+from es_scripts.config import get_config
+
 
 class DatagouvfrAPI:
 
-    def __init__(self, base_url: str | None = None, es_tag: str | None = None):
-        if not (
-            base_url := base_url or os.getenv("DATAGOUVFR_URL")
-        ) or not (
-            api_key := os.getenv("DATAGOUVFR_API_KEY")
-        ) or not (
-            es_tag := es_tag or os.getenv("ECOSPHERES_TAG")
-        ):
-            raise Exception("Missing env var(s).")
-        self.base_url: str = base_url
+    def __init__(self, env: str):
+        if not (api_key := os.getenv("DATAGOUVFR_API_KEY")):
+            raise Exception("Missing env var DATAGOUVFR_API_KEY.")
         self.api_key: str = api_key
-        self.es_tag: str = es_tag
+
+        self.config = get_config(env)
+        self.base_url: str = self.config["datagouvfr"]["base_url"]
+        self.es_tag: str = self.config["universe"]["name"]
+
+        print(f"API ready for {env}")
 
     @property
     def headers(self):

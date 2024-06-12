@@ -8,11 +8,9 @@ from minicli import cli, run
 from es_scripts.api import DatagouvfrAPI
 
 
-api = DatagouvfrAPI()
-
-
 @cli
-def migrate(slug: str = "", dry_run: bool = False):
+def migrate(slug: str = "", dry_run: bool = False, env: str = "demo"):
+    api = DatagouvfrAPI(env)
     bouquets = api.get_bouquets()
     bouquets = [b for b in bouquets if b["slug"] == slug] if slug else bouquets
     for bouquet in bouquets:

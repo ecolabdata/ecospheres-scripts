@@ -7,9 +7,7 @@ Collection de scripts pour manipuler les données d'Ecosphères sur data.gouv.fr
 Ajouter la configuration en variable d'environnement :
 
 ```shell
-export DATAGOUVFR_URL=https://demo.data.gouv.fr
 export DATAGOUVFR_API_KEY=xxx
-export ECOSPHERES_TAG=ecospheres
 ```
 
 ```shell
@@ -60,3 +58,5 @@ Copie un bouquet d'un environnement à l'autre.
 ```shell
 python es_scripts/bouquets.py copy itineraires-fraicheur [--source prod] [--destination demo]
 ```
+
+`source` et `destination` peuvent valoir `demo` ou `prod` et on récupère dans ce cas la configuration depuis le dépôt github. Il est aussi possible de fournir le chemin d'un fichier de configuration local.

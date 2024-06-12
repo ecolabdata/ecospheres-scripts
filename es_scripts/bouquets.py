@@ -1,16 +1,8 @@
 import requests
-import yaml
 
 from minicli import cli, run
 
 from es_scripts.api import DatagouvfrAPI
-
-
-def get_config(env: str) -> dict:
-    url = f"https://raw.githubusercontent.com/opendatateam/udata-front-kit/ecospheres-{env}/configs/ecospheres/config.yaml"  # noqa
-    r = requests.get(url)
-    r.raise_for_status()
-    return yaml.safe_load(r.text)
 
 
 @cli
@@ -18,17 +10,13 @@ def copy(slug: str, source: str = "prod", destination: str = "demo"):
     """
     Copy a bouquet from one env to another
     """
-    config_source = get_config(source)
-    config_destination = get_config(destination)
+    print(f"Copying from {source} to {destination}")
 
-    api_source = DatagouvfrAPI(
-        base_url=config_source["datagouvfr"]["base_url"],
-        es_tag=config_source["universe"]["name"]
-    )
-    api_destination = DatagouvfrAPI(
-        base_url=config_destination["datagouvfr"]["base_url"],
-        es_tag=config_destination["universe"]["name"]
-    )
+    api_source = DatagouvfrAPI(source)
+    api_destination = DatagouvfrAPI(destination)
+
+    config_source = api_source.config
+    config_destination = api_source.config
 
     source_data = api_source.get_bouquet(slug)
 
