@@ -16,7 +16,7 @@ def copy(slug: str, source: str = "prod", destination: str = "demo"):
     api_destination = DatagouvfrAPI(destination)
 
     config_source = api_source.config
-    config_destination = api_source.config
+    config_destination = api_destination.config
 
     source_data = api_source.get_bouquet(slug)
 
