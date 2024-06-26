@@ -7,15 +7,14 @@ Collection de scripts pour manipuler les données d'Ecosphères sur data.gouv.fr
 Ajouter la configuration en variable d'environnement :
 
 ```shell
-export DATAGOUVFR_URL=https://demo.data.gouv.fr
 export DATAGOUVFR_API_KEY=xxx
-export ECOSPHERES_TAG=ecospheres
 ```
 
 ```shell
 python3 -mvenv pyenv
 source pyenv/bin/activate
 pip install -r requirements.txt
+pip install -e .
 ```
 
 ## Scripts
@@ -39,7 +38,7 @@ XXX
 Première étape : duplication des anciens extras vers les nouveaux.
 
 ```shell
-python migrations/20240529_1_extras_schema.py migrate [--dry-run] [slug]
+python ecospheres/migrations/20240529_1_extras_schema.py migrate [--dry-run] [slug]
 ```
 
 Deuxième étape : déploiement de la version utilisant les nouveaux extras.
@@ -47,5 +46,17 @@ Deuxième étape : déploiement de la version utilisant les nouveaux extras.
 Troisème étape : suppression des anciens extras.
 
 ```shell
-python migrations/20240529_2_extras_schema.py migrate [--dry-run] [slug]
+python ecospheres/migrations/20240529_2_extras_schema.py migrate [--dry-run] [slug]
 ```
+
+### Bouquets
+
+#### Copy
+
+Copie un bouquet d'un environnement à l'autre.
+
+```shell
+python ecospheres/bouquets.py copy itineraires-fraicheur [--source prod] [--destination demo]
+```
+
+`source` et `destination` peuvent valoir `demo` ou `prod` et on récupère dans ce cas la configuration depuis le dépôt github. Il est aussi possible de fournir le chemin d'un fichier de configuration local.
