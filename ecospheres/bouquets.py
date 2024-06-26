@@ -2,7 +2,7 @@ import requests
 
 from minicli import cli, run
 
-from es_scripts.api import DatagouvfrAPI
+from ecospheres.api import DatagouvfrAPI
 
 
 @cli

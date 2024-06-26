@@ -2,7 +2,7 @@ import os
 
 import requests
 
-from es_scripts.config import get_config
+from ecospheres.config import get_config
 
 
 class DatagouvfrAPI:

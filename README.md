@@ -38,7 +38,7 @@ XXX
 Première étape : duplication des anciens extras vers les nouveaux.
 
 ```shell
-python es_scripts/migrations/20240529_1_extras_schema.py migrate [--dry-run] [slug]
+python ecospheres/migrations/20240529_1_extras_schema.py migrate [--dry-run] [slug]
 ```
 
 Deuxième étape : déploiement de la version utilisant les nouveaux extras.
@@ -46,7 +46,7 @@ Deuxième étape : déploiement de la version utilisant les nouveaux extras.
 Troisème étape : suppression des anciens extras.
 
 ```shell
-python es_scripts/migrations/20240529_2_extras_schema.py migrate [--dry-run] [slug]
+python ecospheres/migrations/20240529_2_extras_schema.py migrate [--dry-run] [slug]
 ```
 
 ### Bouquets
@@ -56,7 +56,7 @@ python es_scripts/migrations/20240529_2_extras_schema.py migrate [--dry-run] [sl
 Copie un bouquet d'un environnement à l'autre.
 
 ```shell
-python es_scripts/bouquets.py copy itineraires-fraicheur [--source prod] [--destination demo]
+python ecospheres/bouquets.py copy itineraires-fraicheur [--source prod] [--destination demo]
 ```
 
 `source` et `destination` peuvent valoir `demo` ou `prod` et on récupère dans ce cas la configuration depuis le dépôt github. Il est aussi possible de fournir le chemin d'un fichier de configuration local.
