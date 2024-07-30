@@ -55,11 +55,12 @@ def copy(slug: str, source: str = "prod", destination: str = "demo"):
 
     destination_data["datasets"] = []
     destination_data["extras"] = {}
-    destination_data["extras"]["ecospheres:informations"] = source_data["extras"][
-        "ecospheres:informations"
-    ]
-    destination_data["extras"]["ecospheres:datasets_properties"] = []
-    for d in source_data["extras"]["ecospheres:datasets_properties"]:
+    destination_data["extras"]["ecospheres"] = {
+        "theme": source_data["extras"]["ecospheres"]["theme"],
+        "subtheme": source_data["extras"]["ecospheres"]["subtheme"],
+    }
+    destination_data["extras"]["ecospheres"]["datasets_properties"] = []
+    for d in source_data["extras"]["ecospheres"]["datasets_properties"]:
         if d["id"]:
             r = api_destination._get(f"/api/1/datasets/{d['id']}/")
             if not r.ok:
@@ -69,7 +70,7 @@ def copy(slug: str, source: str = "prod", destination: str = "demo"):
                 d["uri"] = f"{config_source['datagouvfr']['base_url']}{d['uri']}"
             else:
                 destination_data["datasets"].append(d["id"])
-        destination_data["extras"]["ecospheres:datasets_properties"].append(d)
+        destination_data["extras"]["ecospheres"]["datasets_properties"].append(d)
 
     if existing_id:
         r = api_destination.put(f"/api/1/topics/{existing_id}/", json=destination_data)
