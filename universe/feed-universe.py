@@ -79,6 +79,12 @@ class ApiHelper:
             verbose(e)
         return list(datasets)
 
+    def get_organization(self, org):
+        url = f"{self.base_url}/api/1/organizations/{org}/"
+        r = session.get(url)
+        r.raise_for_status()
+        return r.json()
+
     @elapsed_and_count
     def get_organizations(self, query):
         orgs = set()
@@ -221,11 +227,22 @@ if __name__ == "__main__":
     t_count = 0
     t_all = time.time()
     try:
-        orgs = slugs
+        orgs = set()
+
+        for org in slugs:
+            verbose(f"Checking organization '{org}'")
+            try:
+                api.get_organization(org)
+                orgs.add(org)
+            except:
+                print(f"Unknown organization '{org}'")
+
         for q in queries:
             verbose(f"Fetching organizations for query '{q}'")
             orgs |= set(api.get_organizations(q))
+
         orgs -= skip
+        print(f"Processing {len(orgs)} organizations...")
 
         if args.reset:
             print(f"Removing ALL datasets from topic '{topic}'")
