@@ -13,6 +13,8 @@ if proc == 'lxml':
   iso = etree.parse(xml_file)
   dcat = transform(iso, CoupledResourceLookUp="'disabled'")
   print(etree.tostring(dcat, pretty_print=True, encoding='unicode'))
+  for error in transform.error_log:
+    print(f"{error.message} (line {error.line})", file=sys.stderr)
 
 elif proc == 'saxon':
   with PySaxonProcessor(license=False) as saxon_proc:
