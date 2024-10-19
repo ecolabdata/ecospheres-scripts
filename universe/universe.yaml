@@ -90,6 +90,7 @@ organizations:
   skip:
     - conseil-departemental-des-alpes-maritimes
     - csw-moissonnable-dreal-npdc
+    - ddt-creuse-1
     - mon-diagnostic-artificialisation
     - test-dreal-grand-est
     - test-dreal-paca
