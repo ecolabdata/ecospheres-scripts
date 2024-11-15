@@ -69,7 +69,7 @@ class ApiHelper:
             r.raise_for_status()
             return r.json()
         else:
-            print(f"Would create harvester:", json.dumps(data, indent=2))
+            print(f"Would create harvester:", json.dumps(data, indent=2, ensure_ascii=False))
             return None
 
 
@@ -92,7 +92,7 @@ class ApiHelper:
             r.raise_for_status()
             return r.json()
         else:
-            print(f"Would update harvester:", json.dumps(data, indent=2))
+            print(f"Would update harvester:", json.dumps(data, indent=2, ensure_ascii=False))
             return None
 
 
