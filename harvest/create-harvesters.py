@@ -1,10 +1,15 @@
 import argparse
 import json
 import requests
+import time
 import yaml
 from datetime import datetime
 
-session = requests.Session()
+# FIXME
+# getting requests errors (remote closed) after large time.sleep
+# session = requests.Session()
+session = requests
+
 
 class ApiHelper:
 
@@ -230,3 +235,6 @@ if __name__ == "__main__":
 
         if args.validate_harvester:
             validated = api.validate_harvester(harvester_id)
+
+        if not harvester_exists and not api.dry_run:
+            time.sleep(60)
