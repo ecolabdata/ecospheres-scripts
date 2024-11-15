@@ -2,6 +2,7 @@ import argparse
 import json
 import requests
 import yaml
+from datetime import datetime
 
 session = requests.Session()
 
@@ -183,6 +184,8 @@ if __name__ == "__main__":
         org_slug = endpoint['org']
         schedule = endpoint.get('schedule')
         prefix = endpoint.get('prefix')
+
+        print(f"Processing endpoint {name} at {str(datetime.now())}")
 
         org_id = api.get_org_id_from_slug(org_slug)
         org_exists = org_id is not None
