@@ -230,11 +230,11 @@ if __name__ == "__main__":
                     url = f"{api_url}/fr/admin/harvester/{harvester_id}"
                     print(f"Created harvester for '{name}': {url}")
 
-        if schedule and args.update_schedules:
-            api.update_harvester_schedule(harvester_id, schedule)
-
         if args.validate_harvester:
             validated = api.validate_harvester(harvester_id)
+
+        if schedule and args.update_schedules:
+            api.update_harvester_schedule(harvester_id, schedule)
 
         if not harvester_exists and not api.dry_run:
             time.sleep(60)
