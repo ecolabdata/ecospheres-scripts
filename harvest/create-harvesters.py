@@ -94,6 +94,20 @@ class ApiHelper:
             return None
 
 
+    def update_harvester_schedule(self, ident, schedule):
+        url = f"{self.base_url}/api/1/harvest/source/{ident}/schedule"
+        headers = {'Content-Type': 'application/json', 'X-API-KEY': self.token}
+        data = schedule
+
+        if not self.dry_run:
+            r = session.post(url, data=data, headers=headers)
+            r.raise_for_status()
+            return r.json()
+        else:
+            print(f"Would update harvester schedule:", data)
+            return None
+
+
     def validate_harvester(self, ident):
         if not self.dry_run:
             url = f"{self.base_url}/api/1/harvest/source/{ident}"
@@ -136,6 +150,8 @@ if __name__ == "__main__":
                         help='harvesters yaml config file(s)')
     parser.add_argument('-c', '--create-orgs', action='store_true', default=False,
                         help='create missing organizations')
+    parser.add_argument('-s', '--update-schedules', action='store_true', default=False,
+                        help='update existing harvesters schedules')
     parser.add_argument('-u', '--update-harvesters', action='store_true', default=False,
                         help='update existing harvesters')
     parser.add_argument('-v', '--validate-harvester', action='store_true', default=False,
@@ -162,6 +178,7 @@ if __name__ == "__main__":
         name = endpoint['name']
         target = endpoint['url']
         org_slug = endpoint['org']
+        schedule = endpoint.get('schedule')
         prefix = endpoint.get('prefix')
 
         org_id = api.get_org_id_from_slug(org_slug)
@@ -195,12 +212,16 @@ if __name__ == "__main__":
             else:
                 print(f"Harvester for '{name}' already exists (skipping): {url}")
         else:
-            h = api.create_harvester(name, backend, target, org_id, prefix)
+            h = api.create_harvester(name, backend, target, org_id, prefix=prefix)
             if h:
                 harvester_id = h.get("id")
                 if harvester_id:
                     url = f"{api_url}/fr/admin/harvester/{harvester_id}"
                     print(f"Created harvester for '{name}': {url}")
+
+        if schedule and args.update_schedules:
+            api.update_harvester_schedule(harvester_id, schedule)
+            print(f"Updated harvester schedule for '{name}': {schedule}")
 
         if args.validate_harvester:
             validated = api.validate_harvester(harvester_id)
