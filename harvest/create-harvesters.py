@@ -53,7 +53,8 @@ class ApiHelper:
             'organization': {
                 'id': org_id if org_id or not self.dry_run else '<not created in dry-run>'
             },
-            'url': target
+            'url': target,
+            'description': "Configuré par Écosphères - https://github.com/ecolabdata/ecospheres/issues/476"
         }
         if prefix:
             data['config'] = {
