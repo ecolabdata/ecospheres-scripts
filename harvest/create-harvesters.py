@@ -49,6 +49,7 @@ class ApiHelper:
         data = {
             'active': True,
             'autoarchive': True,
+            'backend': backend,
             'name': name,
             'organization': {
                 'id': org_id if org_id or not self.dry_run else '<not created in dry-run>'
