@@ -104,6 +104,7 @@ class ApiHelper:
         if not self.dry_run:
             r = session.post(url, data=data, headers=headers)
             r.raise_for_status()
+            print(f"Updated harvester schedule for '{name}': {schedule}")
             return r.json()
         else:
             print(f"Would update harvester schedule:", data)
@@ -223,7 +224,6 @@ if __name__ == "__main__":
 
         if schedule and args.update_schedules:
             api.update_harvester_schedule(harvester_id, schedule)
-            print(f"Updated harvester schedule for '{name}': {schedule}")
 
         if args.validate_harvester:
             validated = api.validate_harvester(harvester_id)
