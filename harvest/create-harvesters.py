@@ -5,11 +5,6 @@ import time
 import yaml
 from datetime import datetime
 
-# FIXME
-# getting requests errors (remote closed) after large time.sleep
-# session = requests.Session()
-session = requests
-
 
 class ApiHelper:
 
@@ -21,7 +16,7 @@ class ApiHelper:
     def get_org_id_from_slug(self, slug):
         url = f"{self.base_url}/api/1/organizations/{slug}/"
         headers = {'X-Fields': 'id'}
-        r = session.get(url, headers=headers)
+        r = requests.get(url, headers=headers)
         if r.status_code == 404:
             return None
         r.raise_for_status()
@@ -29,7 +24,7 @@ class ApiHelper:
 
     def get_org_harvesters(self, ident):
         url = f"{self.base_url}/api/1/harvest/sources/?owner={ident}"
-        r = session.get(url)
+        r = requests.get(url)
         r.raise_for_status()
         return r.json().get('data', [])
 
@@ -41,7 +36,7 @@ class ApiHelper:
             "description": "Ecospheres test org",
         }
         if not self.dry_run:
-            r = session.post(url, headers=headers, data=json.dumps(data))
+            r = requests.post(url, headers=headers, data=json.dumps(data))
             r.raise_for_status()
             return r.json()
         else:
@@ -71,7 +66,7 @@ class ApiHelper:
             }
 
         if not self.dry_run:
-            r = session.post(url, data=json.dumps(data), headers=headers)
+            r = requests.post(url, data=json.dumps(data), headers=headers)
             r.raise_for_status()
             return r.json()
         else:
@@ -94,7 +89,7 @@ class ApiHelper:
             }
 
         if not self.dry_run:
-            r = session.put(url, data=json.dumps(data), headers=headers)
+            r = requests.put(url, data=json.dumps(data), headers=headers)
             r.raise_for_status()
             return r.json()
         else:
@@ -108,7 +103,7 @@ class ApiHelper:
         data = schedule
 
         if not self.dry_run:
-            r = session.post(url, data=data, headers=headers)
+            r = requests.post(url, data=data, headers=headers)
             r.raise_for_status()
             print(f"Updated harvester schedule for '{name}': {schedule}")
             return r.json()
@@ -125,7 +120,7 @@ class ApiHelper:
                 'X-API-KEY': self.token,
                 'X-Fields': 'validation{state}',
             }
-            r = session.get(url, headers=headers)
+            r = requests.get(url, headers=headers)
             r.raise_for_status()
             validated = r.json().get("validation", {}).get("state") == "accepted"
             if validated:
@@ -143,7 +138,7 @@ class ApiHelper:
         }
         data = {'state': 'accepted'}
         if not self.dry_run:
-            r = session.post(url, data=json.dumps(data), headers=headers)
+            r = requests.post(url, data=json.dumps(data), headers=headers)
             r.raise_for_status()
             validated = r.json().get("validation", {}).get("state") == "accepted"
             print(f"Harvester validation {'succeeded' if validated else 'failed'}")
