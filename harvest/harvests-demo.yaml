@@ -1,0 +1,494 @@
+harvests:
+  backend: csw-iso-19139
+  endpoints:
+  - name: Géo-IDE DDT 01
+    org: ddt-de-lain
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 0 0 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt01
+  - name: Géo-IDE DDT 02
+    org: ddt-aisne
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 3 0 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt02
+  - name: Géo-IDE DDT 03
+    org: direction-departementale-des-territoires-de-lallier
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 6 0 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt03
+  - name: Géo-IDE DDT 04
+    org: direction-departementale-des-territoires-des-alpes-de-haute-provence
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 9 0 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt04
+  - name: Géo-IDE DDT 05
+    org: direction-departementale-des-territoires-des-hautes-alpes
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 12 0 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt05
+  - name: Géo-IDE DDTM 06
+    org: ddtm-alpes-maritimes
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 15 0 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddtm06
+  - name: Géo-IDE DDT 07
+    org: ddt-de-lardeche
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 18 0 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt07
+  - name: Géo-IDE DDT 08
+    org: ddt-ardennes
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 21 0 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt08
+  - name: Géo-IDE DDT 09
+    org: direction-departementale-des-territoires-de-lariege
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 24 0 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt09
+  - name: Géo-IDE DDT 10
+    org: direction-departementale-des-territoires-de-laube
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 27 0 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt10
+  - name: Géo-IDE DDTM 11
+    org: ddtm-aude
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 30 0 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddtm11
+  - name: Géo-IDE DDT 12
+    org: ddt-aveyron
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 33 0 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt12
+  - name: Géo-IDE DDTM 13
+    org: direction-departementale-des-territoires-et-de-la-mer-des-bouches-du-rhone
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 36 0 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddtm13
+  - name: Géo-IDE DDTM 14
+    org: direction-departementale-des-territoires-et-de-la-mer-du-calvados
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 39 0 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddtm14
+  - name: Géo-IDE DDT 15
+    org: direction-departementale-et-des-territoires-du-cantal
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 42 0 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt15
+  - name: Géo-IDE DDT 16
+    org: direction-departementale-des-territoires-de-charente
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 45 0 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt16
+  - name: Géo-IDE DDTM 17
+    org: direction-departementale-des-territoires-et-de-la-mer-de-charente-maritime
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 48 0 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddtm17
+  - name: Géo-IDE DDT 18
+    org: direction-departementale-des-territoires-du-cher
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 51 0 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt18
+  - name: Géo-IDE DDT 19
+    org: direction-departementale-des-territoires-de-la-correze
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 54 0 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt19
+  - name: Géo-IDE DDT 21
+    org: ddt-cote-dor
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 57 0 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt21
+  - name: Géo-IDE DDTM 22
+    org: ddtm-cotes-darmor
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 0 1 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddtm22
+  - name: Géo-IDE DDT 23
+    org: ddt-creuse
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 3 1 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt23
+  - name: Géo-IDE DDT 25
+    org: direction-departementale-des-territoires-du-doubs
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 6 1 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt25
+  - name: Géo-IDE DDT 26
+    org: ddt-drome
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 9 1 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt26
+  - name: Géo-IDE DDTM 27
+    org: direction-departementale-des-territoires-et-de-la-mer-de-leure
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 12 1 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddtm27
+  - name: Géo-IDE DDT 28
+    org: direction-departementale-des-territoires-deure-et-loir
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 15 1 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt28
+  - name: Géo-IDE DDTM 29
+    org: ddtm-finistere
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 18 1 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddtm29
+  - name: Géo-IDE DDT 2A
+    org: ddtm-corse-du-sud
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 21 1 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt2A
+  - name: Géo-IDE DDT 2B
+    org: ddtm-haute-corse
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 24 1 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt2B
+  - name: Géo-IDE DDTM 30
+    org: ddtm-gard
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 27 1 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddtm30
+  - name: Géo-IDE DDT 31
+    org: ddt-haute-garonne
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 30 1 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt31
+  - name: Géo-IDE DDT 32
+    org: direction-departementale-des-territoires-du-gers
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 33 1 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt32
+  - name: Géo-IDE DDTM 33
+    org: ddtm-gironde
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 36 1 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddtm33
+  - name: Géo-IDE DDTM 34
+    org: direction-departementale-des-territoires-et-de-la-mer-de-lherault
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 39 1 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddtm34
+  - name: Géo-IDE DDTM 35
+    org: direction-departementale-des-territoires-et-de-la-mer-dille-et-vilaine
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 42 1 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddtm35
+  - name: Géo-IDE DDT 36
+    org: ddt-indre
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 45 1 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt36
+  - name: Géo-IDE DDT 37
+    org: direction-departementale-des-territoires-dindre-et-loire
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 48 1 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt37
+  - name: Géo-IDE DDT 38
+    org: direction-departementale-des-territoires-de-lisere
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 51 1 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt38
+  - name: Géo-IDE DDT 39
+    org: ddt-jura
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 54 1 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt39
+  - name: Géo-IDE DDTM 40
+    org: direction-departementale-des-territoires-et-de-la-mer-des-landes
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 57 1 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddtm40
+  - name: Géo-IDE DDT 41
+    org: direction-departementale-des-territoires-de-loir-et-cher
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 0 2 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt41
+  - name: Géo-IDE DDT 42
+    org: ddt-de-la-loire
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 3 2 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt42
+  - name: Géo-IDE DDT 43
+    org: direction-departementale-des-territoires-de-la-haute-loire
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 6 2 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt43
+  - name: Géo-IDE DDTM 44
+    org: direction-departementale-des-territoires-et-de-la-mer-de-loire-atlantique
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 9 2 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddtm44
+  - name: Géo-IDE DDT 45
+    org: direction-departementale-des-territoires-du-loiret
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 12 2 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt45
+  - name: Géo-IDE DDT 46
+    org: ddt-lot
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 15 2 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt46
+  - name: Géo-IDE DDT 47
+    org: direction-departementale-des-territoires-de-lot-et-garonne
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 18 2 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt47
+  - name: Géo-IDE DDT 48
+    org: direction-departementale-des-territoires-de-la-lozere
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 21 2 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt48
+  - name: Géo-IDE DDT 49
+    org: ddt-maine-et-loire
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 24 2 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt49
+  - name: Géo-IDE DDTM 50
+    org: ddtm-manche
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 27 2 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddtm50
+  - name: Géo-IDE DDT 51
+    org: direction-departementale-des-territoires-de-la-marne
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 30 2 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt51
+  - name: Géo-IDE DDT 52
+    org: ddt-haute-marne
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 33 2 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt52
+  - name: Géo-IDE DDT 53
+    org: ddt-mayenne
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 36 2 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt53
+  - name: Géo-IDE DDT 54
+    org: ddt-de-meurthe-et-moselle
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 39 2 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt54
+  - name: Géo-IDE DDT 55
+    org: direction-departementale-des-territoires-de-la-meuse
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 42 2 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt55
+  - name: Géo-IDE DDTM 56
+    org: ddtm-morbihan
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 45 2 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddtm56
+  - name: Géo-IDE DDT 57
+    org: ddt-de-la-moselle
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 48 2 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt57
+  - name: Géo-IDE DDT 58
+    org: ddt-nievre
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 51 2 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt58
+  - name: Géo-IDE DDTM 59
+    org: ddtm-nord
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 54 2 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddtm59
+  - name: Géo-IDE DDT 60
+    org: ddt-oise
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 57 2 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt60
+  - name: Géo-IDE DDT 61
+    org: direction-departementale-des-territoires-de-lorne
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 0 3 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt61
+  - name: Géo-IDE DDTM 62
+    org: ddtm-pas-de-calais
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 3 3 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddtm62
+  - name: Géo-IDE DDT 63
+    org: direction-departementale-des-territoire-du-puy-de-dome
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 6 3 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt63
+  - name: Géo-IDE DDTM 64
+    org: direction-departementale-des-territoires-et-de-la-mer-des-pyrenees-atlantiques
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 9 3 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddtm64
+  - name: Géo-IDE DDT 65
+    org: ddt-hautes-pyrenees
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 12 3 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt65
+  - name: Géo-IDE DDTM 66
+    org: ddtm-pyrenees-orientales
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 15 3 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddtm66
+  - name: Géo-IDE DDT 67
+    org: direction-departementale-des-territoires-du-bas-rhin-67
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 18 3 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt67
+  - name: Géo-IDE DDT 68
+    org: direction-departementale-des-territoires-du-haut-rhin-68
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 21 3 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt68
+  - name: Géo-IDE DDT 69
+    org: direction-departementale-des-territoires-du-rhone-1
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 24 3 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt69
+  - name: Géo-IDE DDT 70
+    org: direction-departementale-des-territoires-de-haute-saone
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 27 3 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt70
+  - name: Géo-IDE DDT 71
+    org: direction-departementale-des-territoires-de-saone-et-loire
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 30 3 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt71
+  - name: Géo-IDE DDT 72
+    org: direction-departementale-des-territoires-de-la-sarthe
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 33 3 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt72
+  - name: Géo-IDE DDT 73
+    org: ddt-savoie
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 36 3 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt73
+  - name: Géo-IDE DDT 74
+    org: direction-departementale-des-territoires-de-haute-savoie
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 39 3 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt74
+  - name: Géo-IDE DDTM 76
+    org: ddtm-seine-maritime
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 42 3 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddtm76
+  - name: Géo-IDE DDT 77
+    org: direction-departementale-des-territoires-de-seine-et-marne
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 45 3 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt77
+  - name: Géo-IDE DDT 78
+    org: ddt-yvelines
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 48 3 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt78
+  - name: Géo-IDE DDT 79
+    org: ddt-deux-sevres
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 51 3 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt79
+  - name: Géo-IDE DDTM 80
+    org: direction-departementale-des-territoires-et-de-la-mer-de-la-somme
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 54 3 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddtm80
+  - name: Géo-IDE DDT 81
+    org: ddt-tarn
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 57 3 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt81
+  - name: Géo-IDE DDT 82
+    org: ddt-tarn-et-garonne
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 0 4 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt82
+  - name: Géo-IDE DDTM 83
+    org: direction-departementale-des-territoires-et-de-la-mer-du-var
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 3 4 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddtm83
+  - name: Géo-IDE DDT 84
+    org: ddt-vaucluse
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 6 4 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt84
+  - name: Géo-IDE DDTM 85
+    org: ddtm-vendee
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 9 4 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddtm85
+  - name: Géo-IDE DDT 86
+    org: ddt-vienne
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 12 4 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt86
+  - name: Géo-IDE DDT 87
+    org: ddt-haute-vienne
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 15 4 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt87
+  - name: Géo-IDE DDT 88
+    org: direction-departementale-des-territoires-des-vosges
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 18 4 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt88
+  - name: Géo-IDE DDT 89
+    org: ddt-yonne
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 21 4 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt89
+  - name: Géo-IDE DDT 90
+    org: ddt-territoire-de-belfort
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 24 4 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt90
+  - name: Géo-IDE DDT 91
+    org: direction-departementale-des-territoires-de-lessonne
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 27 4 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt91
+  - name: Géo-IDE DDT 95
+    org: direction-departementale-des-territoires-du-val-doise
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 30 4 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-ddt95
+  - name: Géo-IDE DREAL Bourgogne-Franche-Comte
+    org: direction-regionale-de-lenvironnement-et-du-logement-bourgogne-franche-comte
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 33 4 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-dreal-bourgogne-franche-comte
+  - name: Géo-IDE DREAL Centre-Val-De-Loire
+    org: direction-regionale-de-lenvironnement-de-lamenagement-et-du-logement-du-centre-val-de-loire
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 36 4 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-dreal-centre-val-de-loire
+  - name: Géo-IDE DREAL Grand-Est
+    org: dreal-grand-est
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 39 4 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-dreal-grand-est
+  - name: Géo-IDE DEAL Guadeloupe
+    org: deal-guadeloupe
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 42 4 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-deal-guadeloupe
+  - name: Géo-IDE DREAL Normandie
+    org: direction-regionale-de-lenvironnement-de-lamenagement-et-du-logement-de-normandie
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 45 4 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-dreal-normandie
+  - name: Géo-IDE DREAL Paca
+    org: dreal-provence-alpes-cote-dazur
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 48 4 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-dreal-paca
+  - name: Géo-IDE DREAL Pays-De-Loire
+    org: dreal-pays-de-la-loire-direction-regionale-de-lenvironnement-de-lamenagement-et-du-logement-pays-de-la-loire
+    prefix: http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/
+    schedule: 51 4 * * *
+    url: https://ogc.geo-ide.developpement-durable.gouv.fr/csw/csw-dreal-pays-de-loire
+
