@@ -1,9 +1,10 @@
 import argparse
 import json
 import requests
+import time
 import yaml
+from datetime import datetime
 
-session = requests.Session()
 
 class ApiHelper:
 
@@ -15,7 +16,7 @@ class ApiHelper:
     def get_org_id_from_slug(self, slug):
         url = f"{self.base_url}/api/1/organizations/{slug}/"
         headers = {'X-Fields': 'id'}
-        r = session.get(url, headers=headers)
+        r = requests.get(url, headers=headers)
         if r.status_code == 404:
             return None
         r.raise_for_status()
@@ -23,7 +24,7 @@ class ApiHelper:
 
     def get_org_harvesters(self, ident):
         url = f"{self.base_url}/api/1/harvest/sources/?owner={ident}"
-        r = session.get(url)
+        r = requests.get(url)
         r.raise_for_status()
         return r.json().get('data', [])
 
@@ -35,7 +36,7 @@ class ApiHelper:
             "description": "Ecospheres test org",
         }
         if not self.dry_run:
-            r = session.post(url, headers=headers, data=json.dumps(data))
+            r = requests.post(url, headers=headers, data=json.dumps(data))
             r.raise_for_status()
             return r.json()
         else:
@@ -49,11 +50,13 @@ class ApiHelper:
         data = {
             'active': True,
             'autoarchive': True,
+            'backend': backend,
             'name': name,
             'organization': {
                 'id': org_id if org_id or not self.dry_run else '<not created in dry-run>'
             },
-            'url': target
+            'url': target,
+            'description': "Configuré par Écosphères - https://github.com/ecolabdata/ecospheres/issues/476"
         }
         if prefix:
             data['config'] = {
@@ -63,11 +66,11 @@ class ApiHelper:
             }
 
         if not self.dry_run:
-            r = session.post(url, data=json.dumps(data), headers=headers)
+            r = requests.post(url, data=json.dumps(data), headers=headers)
             r.raise_for_status()
             return r.json()
         else:
-            print(f"Would create harvester:", json.dumps(data, indent=2))
+            print(f"Would create harvester:", json.dumps(data, indent=2, ensure_ascii=False))
             return None
 
 
@@ -86,11 +89,26 @@ class ApiHelper:
             }
 
         if not self.dry_run:
-            r = session.put(url, data=json.dumps(data), headers=headers)
+            r = requests.put(url, data=json.dumps(data), headers=headers)
             r.raise_for_status()
             return r.json()
         else:
-            print(f"Would update harvester:", json.dumps(data, indent=2))
+            print(f"Would update harvester:", json.dumps(data, indent=2, ensure_ascii=False))
+            return None
+
+
+    def update_harvester_schedule(self, ident, schedule):
+        url = f"{self.base_url}/api/1/harvest/source/{ident}/schedule"
+        headers = {'Content-Type': 'application/json', 'X-API-KEY': self.token}
+        data = schedule
+
+        if not self.dry_run:
+            r = requests.post(url, data=data, headers=headers)
+            r.raise_for_status()
+            print(f"Updated harvester schedule for '{name}': {schedule}")
+            return r.json()
+        else:
+            print(f"Would update harvester schedule:", data)
             return None
 
 
@@ -102,7 +120,7 @@ class ApiHelper:
                 'X-API-KEY': self.token,
                 'X-Fields': 'validation{state}',
             }
-            r = session.get(url, headers=headers)
+            r = requests.get(url, headers=headers)
             r.raise_for_status()
             validated = r.json().get("validation", {}).get("state") == "accepted"
             if validated:
@@ -120,7 +138,7 @@ class ApiHelper:
         }
         data = {'state': 'accepted'}
         if not self.dry_run:
-            r = session.post(url, data=json.dumps(data), headers=headers)
+            r = requests.post(url, data=json.dumps(data), headers=headers)
             r.raise_for_status()
             validated = r.json().get("validation", {}).get("state") == "accepted"
             print(f"Harvester validation {'succeeded' if validated else 'failed'}")
@@ -136,6 +154,8 @@ if __name__ == "__main__":
                         help='harvesters yaml config file(s)')
     parser.add_argument('-c', '--create-orgs', action='store_true', default=False,
                         help='create missing organizations')
+    parser.add_argument('-s', '--update-schedules', action='store_true', default=False,
+                        help='update existing harvesters schedules')
     parser.add_argument('-u', '--update-harvesters', action='store_true', default=False,
                         help='update existing harvesters')
     parser.add_argument('-v', '--validate-harvester', action='store_true', default=False,
@@ -162,7 +182,10 @@ if __name__ == "__main__":
         name = endpoint['name']
         target = endpoint['url']
         org_slug = endpoint['org']
+        schedule = endpoint.get('schedule')
         prefix = endpoint.get('prefix')
+
+        print(f"Processing endpoint {name} at {str(datetime.now())}")
 
         org_id = api.get_org_id_from_slug(org_slug)
         org_exists = org_id is not None
@@ -195,7 +218,7 @@ if __name__ == "__main__":
             else:
                 print(f"Harvester for '{name}' already exists (skipping): {url}")
         else:
-            h = api.create_harvester(name, backend, target, org_id, prefix)
+            h = api.create_harvester(name, backend, target, org_id, prefix=prefix)
             if h:
                 harvester_id = h.get("id")
                 if harvester_id:
@@ -204,3 +227,9 @@ if __name__ == "__main__":
 
         if args.validate_harvester:
             validated = api.validate_harvester(harvester_id)
+
+        if schedule and args.update_schedules:
+            api.update_harvester_schedule(harvester_id, schedule)
+
+        if not harvester_exists and not api.dry_run:
+            time.sleep(60)
