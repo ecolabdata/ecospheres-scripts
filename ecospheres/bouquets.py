@@ -46,7 +46,7 @@ def copy(slug: str, source: str = "prod", destination: str = "demo"):
             destination_data["owner"] = source_data["owner"]
         else:
             print(f"Owner does not exist on {destination}")
-    elif source_data["owner"]:
+    elif source_data["organization"]:
         r = api_destination._get(f"/api/1/organization/{source_data['organization']['id']}/")
         if r.ok:
             destination_data["organization"] = source_data["organization"]
