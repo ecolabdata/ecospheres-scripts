@@ -22,8 +22,8 @@ def migrate(slug: str = "", dry_run: bool = False, move: bool = False, env: str 
     bouquets = [b for b in bouquets if b["slug"] == slug] if slug else bouquets
     for bouquet in bouquets:
         print(f"--> Handling {bouquet['slug']}...")
-        original_theme = bouquet["extras"]["ecospheres"]["theme"]
-        original_subtheme = bouquet["extras"]["ecospheres"]["subtheme"]
+        original_theme = bouquet["extras"]["ecospheres"].get("theme")
+        original_subtheme = bouquet["extras"]["ecospheres"].get("subtheme")
         if not original_theme or not original_subtheme:
             print("No theme or subtheme to migrate, skipping.")
             continue
