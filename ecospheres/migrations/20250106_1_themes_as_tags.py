@@ -1,6 +1,6 @@
 """
 Copies or move themes/subthemes from extras to slugified tags
-Idempotent when using clean=False
+Idempotent when using move=False
 """
 import json
 
@@ -16,7 +16,7 @@ def compute_slug(value: str, prefix: Literal["theme", "subtheme"]) -> str:
 
 
 @cli
-def migrate(slug: str = "", dry_run: bool = False, clean: bool = False, env: str = "demo"):
+def migrate(slug: str = "", dry_run: bool = False, move: bool = False, env: str = "demo"):
     api = DatagouvfrAPI(env)
     bouquets = api.get_bouquets()
     bouquets = [b for b in bouquets if b["slug"] == slug] if slug else bouquets
@@ -35,7 +35,7 @@ def migrate(slug: str = "", dry_run: bool = False, clean: bool = False, env: str
             subtheme,
         ]
         payload = {"tags": tags}
-        if clean:
+        if move:
             payload["extras"] = bouquet["extras"]
             payload["extras"]["ecospheres"].pop("theme", None)
             payload["extras"]["ecospheres"].pop("subtheme", None)
