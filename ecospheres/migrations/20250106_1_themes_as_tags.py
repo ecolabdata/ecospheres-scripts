@@ -1,6 +1,6 @@
 """
 Copies or move themes/subthemes from extras to slugified tags
-Idempotent
+Idempotent when using clean=False
 """
 import json
 
@@ -22,8 +22,13 @@ def migrate(slug: str = "", dry_run: bool = False, clean: bool = False, env: str
     bouquets = [b for b in bouquets if b["slug"] == slug] if slug else bouquets
     for bouquet in bouquets:
         print(f"--> Handling {bouquet['slug']}...")
-        theme = compute_slug(bouquet["extras"]["ecospheres"]["theme"], "theme")
-        subtheme = compute_slug(bouquet["extras"]["ecospheres"]["subtheme"], "subtheme")
+        original_theme = bouquet["extras"]["ecospheres"]["theme"]
+        original_subtheme = bouquet["extras"]["ecospheres"]["subtheme"]
+        if not original_theme or not original_subtheme:
+            print("No theme or subtheme to migrate, skipping.")
+            continue
+        theme = compute_slug(original_theme, "theme")
+        subtheme = compute_slug(original_subtheme, "subtheme")
         tags = [
             *[t for t in bouquet["tags"] if compute_slug("", "theme") not in t and compute_slug("", "subtheme") not in t],
             theme,
