@@ -11,7 +11,7 @@ from typing import Literal
 from ecospheres.api import DatagouvfrAPI
 
 
-def compute_slug(value: str, prefix: Literal["theme", "subtheme"]) -> str:
+def compute_slug(value: str, prefix: Literal["theme", "chantier"]) -> str:
     return slugify(f"ecospheres-{prefix}-{value.lower()}")
 
 
@@ -28,9 +28,9 @@ def migrate(slug: str = "", dry_run: bool = False, move: bool = False, env: str 
             print("No theme or subtheme to migrate, skipping.")
             continue
         theme = compute_slug(original_theme, "theme")
-        subtheme = compute_slug(original_subtheme, "subtheme")
+        subtheme = compute_slug(original_subtheme, "chantier")
         tags = [
-            *[t for t in bouquet["tags"] if compute_slug("", "theme") not in t and compute_slug("", "subtheme") not in t],
+            *[t for t in bouquet["tags"] if compute_slug("", "theme") not in t and compute_slug("", "chantier") not in t],
             theme,
             subtheme,
         ]
