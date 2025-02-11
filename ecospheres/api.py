@@ -47,8 +47,11 @@ class DatagouvfrAPI:
         return self.get(f"/api/2/topics/{bouquet_id_or_slug}")
 
     def get_bouquets(self) -> list:
+        LIMIT = 100
         r = self.get(
             "/api/2/topics",
-            params={"include_private": "yes", "tag": self.es_tag, "page_size": 100},
+            params={"include_private": "yes", "tag": self.es_tag, "page_size": LIMIT},
         )
-        return r["data"]
+        data = r["data"]
+        assert len(data) < LIMIT, "Too many bouquets"
+        return data
