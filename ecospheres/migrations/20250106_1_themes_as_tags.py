@@ -1,8 +1,14 @@
 """
 Copies or move themes/subthemes from extras to slugified tags
 Idempotent when using move=False
+
+TODO: generate `themes_new.yaml` for copy paste in new ecospheres config
 """
 import json
+
+from pathlib import Path
+
+import yaml
 
 from minicli import cli, run
 from slugify import slugify
@@ -16,7 +22,7 @@ def compute_slug(value: str, prefix: Literal["theme", "chantier"]) -> str:
 
 
 @cli
-def migrate(slug: str = "", dry_run: bool = False, move: bool = False, env: str = "demo"):
+def migrate_bouquets(slug: str = "", dry_run: bool = False, move: bool = False, env: str = "demo"):
     api = DatagouvfrAPI(env)
     bouquets = api.get_bouquets()
     bouquets = [b for b in bouquets if b["slug"] == slug] if slug else bouquets
@@ -44,6 +50,61 @@ def migrate(slug: str = "", dry_run: bool = False, move: bool = False, env: str 
         else:
             print("Would have updated with:")
             print(json.dumps(payload, indent=2))
+
+
+@cli
+def migrate_conf(
+    input_file: Path = Path("ecospheres/migrations/data/themes_old.yaml"),
+    output_file: Path = Path("ecospheres/migrations/data/themes_new.yaml"),
+):
+    with input_file.open() as f:
+        data = yaml.safe_load(f)
+
+    new_data = {
+        "topics": {
+            "global_tag_prefix": "ecospheres",
+            "filters": [
+                {
+                    "name": "Thématique",
+                    "id": "theme",
+                    "child": "chantier",
+                    "color": "noop",
+                    "values": [],
+                },
+                {
+                    "name": "Chantier",
+                    "id": "chantier",
+                    "color": "green-archipel",
+                    "values": [],
+                },
+            ]
+        }
+    }
+
+    for theme in data["themes"]:
+        theme_slug = slugify(theme["name"]).lower()
+        new_data["topics"]["filters"][0]["values"].append({
+            "id": theme_slug,
+            "name": theme["name"]
+        })
+        for subtheme in theme["subthemes"]:
+            subtheme_slug = slugify(subtheme["name"]).lower()
+            new_data["topics"]["filters"][1]["values"].append({
+                "id": subtheme_slug,
+                "name": subtheme["name"],
+                "parent": theme_slug,
+            })
+
+    if output_file.exists():
+        response = input(f"{output_file} already exists. Overwrite (y/n)? ")
+        if response != "y":
+            print("Aborting.")
+            return
+
+    with output_file.open("w") as f:
+        yaml.safe_dump(new_data, f, allow_unicode=True, sort_keys=False)
+
+    print(f"Done in {output_file}.")
 
 
 if __name__ == "__main__":
