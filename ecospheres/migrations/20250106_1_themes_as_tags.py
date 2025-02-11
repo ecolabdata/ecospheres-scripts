@@ -1,9 +1,3 @@
-"""
-Copies or move themes/subthemes from extras to slugified tags
-Idempotent when using move=False
-
-TODO: generate `themes_new.yaml` for copy paste in new ecospheres config
-"""
 import json
 
 from pathlib import Path
@@ -17,12 +11,36 @@ from typing import Literal
 from ecospheres.api import DatagouvfrAPI
 
 
-def compute_slug(value: str, prefix: Literal["theme", "chantier"]) -> str:
+FilterTypes = Literal["theme", "chantier"]
+
+
+def compute_tag(value: str, prefix: FilterTypes) -> str:
     return slugify(f"ecospheres-{prefix}-{value.lower()}")
+
+
+def find_slug(
+    filter: FilterTypes,
+    value: str,
+    themes_files: Path = Path("ecospheres/migrations/data/themes_new.yaml")
+) -> str | None:
+    with themes_files.open() as f:
+        filters = yaml.safe_load(f)["topics"]["filters"]
+
+    try:
+        values = next(f for f in filters if f["id"] == filter)["values"]
+        filter_value = next(v for v in values if v["name"] == value)
+        return filter_value["id"]
+    except StopIteration:
+        print(f"No slug found for {filter} / '{value}', skipping.")
+        return None
 
 
 @cli
 def migrate_bouquets(slug: str = "", dry_run: bool = False, move: bool = False, env: str = "demo"):
+    """
+    Copies or move themes/subthemes from extras to slugified tags.
+    Idempotent when using `move=False`.
+    """
     api = DatagouvfrAPI(env)
     bouquets = api.get_bouquets()
     bouquets = [b for b in bouquets if b["slug"] == slug] if slug else bouquets
@@ -33,10 +51,14 @@ def migrate_bouquets(slug: str = "", dry_run: bool = False, move: bool = False, 
         if not original_theme or not original_subtheme:
             print("No theme or subtheme to migrate, skipping.")
             continue
-        theme = compute_slug(original_theme, "theme")
-        subtheme = compute_slug(original_subtheme, "chantier")
+        theme_slug = find_slug("theme", original_theme)
+        subtheme_slug = find_slug("chantier", original_subtheme)
+        if not theme_slug or not subtheme_slug:
+            continue
+        theme = compute_tag(theme_slug, "theme")
+        subtheme = compute_tag(subtheme_slug, "chantier")
         tags = [
-            *[t for t in bouquet["tags"] if compute_slug("", "theme") not in t and compute_slug("", "chantier") not in t],
+            *[t for t in bouquet["tags"] if compute_tag("", "theme") not in t and compute_tag("", "chantier") not in t],
             theme,
             subtheme,
         ]
