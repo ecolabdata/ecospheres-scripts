@@ -36,7 +36,7 @@ def find_slug(
 
 
 @cli
-def migrate_bouquets(slug: str = "", dry_run: bool = False, move: bool = False, env: str = "demo"):
+def migrate_bouquets(slug: str = "", dry_run: bool = False, move: bool = False, env: str = "demo", clean_tags: bool = False):
     """
     Copies or move themes/subthemes from extras to slugified tags.
     Idempotent when using `move=False`.
@@ -57,8 +57,12 @@ def migrate_bouquets(slug: str = "", dry_run: bool = False, move: bool = False, 
             continue
         theme = compute_tag(theme_slug, "theme")
         subtheme = compute_tag(subtheme_slug, "chantier")
+        if clean_tags:
+            tags = ["ecospheres"]
+        else:
+            tags = *[t for t in bouquet["tags"] if compute_tag("", "theme") not in t and compute_tag("", "chantier") not in t],
         tags = [
-            *[t for t in bouquet["tags"] if compute_tag("", "theme") not in t and compute_tag("", "chantier") not in t],
+            *tags,
             theme,
             subtheme,
         ]
