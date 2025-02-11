@@ -58,7 +58,7 @@ def migrate_bouquets(slug: str = "", dry_run: bool = False, move: bool = False, 
         theme = compute_tag(theme_slug, "theme")
         subtheme = compute_tag(subtheme_slug, "chantier")
         if clean_tags:
-            tags = ["ecospheres"]
+            tags = [api.es_tag]
         else:
             tags = *[t for t in bouquet["tags"] if compute_tag("", "theme") not in t and compute_tag("", "chantier") not in t],
         tags = [
