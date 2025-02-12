@@ -11,7 +11,7 @@ from typing import Literal
 from ecospheres.api import DatagouvfrAPI
 
 
-FilterTypes = Literal["theme", "chantier"]
+FilterTypes = Literal["theme", "subtheme"]
 
 
 def compute_tag(value: str, prefix: FilterTypes) -> str:
@@ -21,10 +21,10 @@ def compute_tag(value: str, prefix: FilterTypes) -> str:
 def find_slug(
     filter: FilterTypes,
     value: str,
-    themes_files: Path = Path("ecospheres/migrations/data/themes_new.yaml")
+    themes_file: Path = Path("ecospheres/migrations/data/themes_new.yaml")
 ) -> str | None:
-    with themes_files.open() as f:
-        filters = yaml.safe_load(f)["topics"]["filters"]
+    with themes_file.open() as f:
+        filters = yaml.safe_load(f)["filters"]["bouquets"]["items"]
 
     try:
         values = next(f for f in filters if f["id"] == filter)["values"]
@@ -52,15 +52,15 @@ def migrate_bouquets(slug: str = "", dry_run: bool = False, move: bool = False, 
             print("No theme or subtheme to migrate, skipping.")
             continue
         theme_slug = find_slug("theme", original_theme)
-        subtheme_slug = find_slug("chantier", original_subtheme)
+        subtheme_slug = find_slug("subtheme", original_subtheme)
         if not theme_slug or not subtheme_slug:
             continue
         theme = compute_tag(theme_slug, "theme")
-        subtheme = compute_tag(subtheme_slug, "chantier")
+        subtheme = compute_tag(subtheme_slug, "subtheme")
         if clean_tags:
             tags = [api.es_tag]
         else:
-            tags = *[t for t in bouquet["tags"] if compute_tag("", "theme") not in t and compute_tag("", "chantier") not in t],
+            tags = *[t for t in bouquet["tags"] if compute_tag("", "theme") not in t and compute_tag("", "subtheme") not in t],
         tags = [
             *tags,
             theme,
@@ -87,35 +87,37 @@ def migrate_conf(
         data = yaml.safe_load(f)
 
     new_data = {
-        "topics": {
-            "global_tag_prefix": "ecospheres",
-            "filters": [
-                {
-                    "name": "Thématique",
-                    "id": "theme",
-                    "child": "chantier",
-                    "color": "noop",
-                    "values": [],
-                },
-                {
-                    "name": "Chantier",
-                    "id": "chantier",
-                    "color": "green-archipel",
-                    "values": [],
-                },
-            ]
+        "filters": {
+            "bouquets": {
+                "tag_prefix": "ecospheres",
+                "items": [
+                    {
+                        "name": "Thématique",
+                        "id": "theme",
+                        "child": "chantier",
+                        "color": "noop",
+                        "values": [],
+                    },
+                    {
+                        "name": "Chantier",
+                        "id": "chantier",
+                        "color": "green-archipel",
+                        "values": [],
+                    },
+                ]
+            }
         }
     }
 
     for theme in data["themes"]:
         theme_slug = slugify(theme["name"]).lower()
-        new_data["topics"]["filters"][0]["values"].append({
+        new_data["filters"]["bouquets"]["items"][0]["values"].append({
             "id": theme_slug,
             "name": theme["name"]
         })
         for subtheme in theme["subthemes"]:
             subtheme_slug = slugify(subtheme["name"]).lower()
-            new_data["topics"]["filters"][1]["values"].append({
+            new_data["filters"]["bouquets"]["items"][1]["values"].append({
                 "id": subtheme_slug,
                 "name": subtheme["name"],
                 "parent": theme_slug,

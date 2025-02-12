@@ -1,103 +1,109 @@
-topics:
-  global_tag_prefix: ecospheres
-  filters:
-  - name: Thématique
-    id: theme
-    child: chantier
-    color: noop
-    values:
-    - id: se-loger
-      name: Se loger
-    - id: produire
-      name: Produire
-    - id: se-nourrir
-      name: Se nourrir
-    - id: consommer
-      name: Consommer
-    - id: preserver
-      name: Préserver
-    - id: se-deplacer
-      name: Se déplacer
-    - id: chantiers-transverses
-      name: Chantiers transverses
-  - name: Chantier
-    id: chantier
-    color: green-archipel
-    values:
-    - id: construction-et-renovation-des-logements
-      name: Construction et rénovation des logements
-      parent: se-loger
-    - id: amenagements-des-villes
-      name: Aménagements des villes
-      parent: se-loger
-    - id: nucleaire
-      name: Nucléaire
-      parent: produire
-    - id: tertiaire
-      name: Tertiaire (incluant les bâtiments publics de l'État et des collectivités,
-        hors logement)
-      parent: produire
-    - id: electricite-decarbonee
-      name: Production d'électricité décarbonée (hors nucléaire)
-      parent: produire
-    - id: alimentation
-      name: Alimentation
-      parent: se-nourrir
-    - id: agriculture-et-peche
-      name: Agriculture et pêche
-      parent: se-nourrir
-    - id: consommation-plus-durable-menages
-      name: Consommation plus durable (ménages)
-      parent: consommer
-    - id: numerique-responsable
-      name: Numérique responsable
-      parent: consommer
-    - id: achats-durables
-      name: Achats durables (de l'État, des collectivités et des entreprises)
-      parent: consommer
-    - id: eau
-      name: Eau
-      parent: preserver
-    - id: sols
-      name: Sols
-      parent: preserver
-    - id: oceans-et-mers
-      name: Océans et mers
-      parent: preserver
-    - id: foret
-      name: Forêt
-      parent: preserver
-    - id: voitures-et-infrastructures-routieres
-      name: Voitures et infrastructures routières
-      parent: se-deplacer
-    - id: mobilite-courte-distance-hors-voiture
-      name: Mobilité courte distance (hors voiture)
-      parent: se-deplacer
-    - id: mobilite-longue-distance-avion-train
-      name: Mobilité longue distance (avion, train)
-      parent: se-deplacer
-    - id: financement-investissement
-      name: Le financement qui permet de définir des trajectoires d'investissement
-        crédibles et cohérentes
-      parent: chantiers-transverses
-    - id: planification-differenciation-territoriale
-      name: La planification et la différenciation territoriale selon les caractéristiques
-        et les spécificités de chaque territoire, incluant les territoires ultra-marins
-      parent: chantiers-transverses
-    - id: transition-filieres-emplois-formations-competences
-      name: La transition des filières avec la gestion des emplois, des formations
-        et des compétences
-      parent: chantiers-transverses
-    - id: donnees-environnementales
-      name: Les données environnementales
-      parent: chantiers-transverses
-    - id: services-publics-exemplaires
-      name: Les services publics exemplaires
-      parent: chantiers-transverses
-    - id: transition-juste
-      name: La transition juste et les mesures d’accompagnement, pour ne laisser personne
-        au bord du chemin
-      parent: chantiers-transverses
-    - id: sobriete-usages-ressources
-      name: La sobriété des usages et des ressources
-      parent: chantiers-transverses
+filters:
+  bouquets:
+    tag_prefix: ecospheres
+    items:
+    - name: Thématique
+      id: theme
+      child: subtheme
+      color: noop
+      values:
+      - id: se-loger
+        name: Se loger
+      - id: produire
+        name: Produire
+      - id: se-nourrir
+        name: Se nourrir
+      - id: consommer
+        name: Consommer
+      - id: preserver
+        name: Préserver
+      - id: se-deplacer
+        name: Se déplacer
+      - id: chantiers-transverses
+        name: Chantiers transverses
+    - name: Chantier
+      id: subtheme
+      color: green-archipel
+      values:
+      - id: construction-et-renovation-des-logements
+        name: Construction et rénovation des logements
+        parent: se-loger
+      - id: amenagements-des-villes
+        name: Aménagements des villes
+        parent: se-loger
+      - id: nucleaire
+        name: Nucléaire
+        parent: produire
+      - id: tertiaire
+        name:
+          Tertiaire (incluant les bâtiments publics de l'État et des collectivités,
+          hors logement)
+        parent: produire
+      - id: electricite-decarbonee
+        name: Production d'électricité décarbonée (hors nucléaire)
+        parent: produire
+      - id: alimentation
+        name: Alimentation
+        parent: se-nourrir
+      - id: agriculture-et-peche
+        name: Agriculture et pêche
+        parent: se-nourrir
+      - id: consommation-plus-durable-menages
+        name: Consommation plus durable (ménages)
+        parent: consommer
+      - id: numerique-responsable
+        name: Numérique responsable
+        parent: consommer
+      - id: achats-durables
+        name: Achats durables (de l'État, des collectivités et des entreprises)
+        parent: consommer
+      - id: eau
+        name: Eau
+        parent: preserver
+      - id: sols
+        name: Sols
+        parent: preserver
+      - id: oceans-et-mers
+        name: Océans et mers
+        parent: preserver
+      - id: foret
+        name: Forêt
+        parent: preserver
+      - id: voitures-et-infrastructures-routieres
+        name: Voitures et infrastructures routières
+        parent: se-deplacer
+      - id: mobilite-courte-distance-hors-voiture
+        name: Mobilité courte distance (hors voiture)
+        parent: se-deplacer
+      - id: mobilite-longue-distance-avion-train
+        name: Mobilité longue distance (avion, train)
+        parent: se-deplacer
+      - id: financement-investissement
+        name:
+          Le financement qui permet de définir des trajectoires d'investissement
+          crédibles et cohérentes
+        parent: chantiers-transverses
+      - id: planification-differenciation-territoriale
+        name:
+          La planification et la différenciation territoriale selon les caractéristiques
+          et les spécificités de chaque territoire, incluant les territoires ultra-marins
+        parent: chantiers-transverses
+      - id: transition-filieres-emplois-formations-competences
+        name:
+          La transition des filières avec la gestion des emplois, des formations
+          et des compétences
+        parent: chantiers-transverses
+      - id: donnees-environnementales
+        name: Les données environnementales
+        parent: chantiers-transverses
+      - id: services-publics-exemplaires
+        name: Les services publics exemplaires
+        parent: chantiers-transverses
+      - id: transition-juste
+        name:
+          La transition juste et les mesures d’accompagnement, pour ne laisser personne
+          au bord du chemin
+        parent: chantiers-transverses
+      - id: sobriete-usages-ressources
+        name: La sobriété des usages et des ressources
+        parent: chantiers-transverses
