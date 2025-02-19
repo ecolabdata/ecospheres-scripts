@@ -1,3 +1,4 @@
 requests
 minicli
 PyYAML
+awesome-slugify
