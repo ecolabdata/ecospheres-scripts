@@ -10,6 +10,8 @@ from typing import Literal
 
 from ecospheres.api import DatagouvfrAPI
 
+OLD_THEMES = Path("ecospheres/migrations/data/themes_old.yaml")
+NEW_THEMES = Path("ecospheres/migrations/data/themes_new.yaml")
 
 FilterTypes = Literal["theme", "subtheme"]
 
@@ -21,7 +23,7 @@ def compute_tag(value: str, prefix: FilterTypes) -> str:
 def find_slug(
     filter: FilterTypes,
     value: str,
-    themes_file: Path = Path("ecospheres/migrations/data/themes_new.yaml")
+    themes_file: Path = NEW_THEMES
 ) -> str | None:
     with themes_file.open() as f:
         filters = yaml.safe_load(f)["filters"]["bouquets"]["items"]
@@ -54,13 +56,15 @@ def migrate_bouquets(slug: str = "", dry_run: bool = False, move: bool = False, 
         theme_slug = find_slug("theme", original_theme)
         subtheme_slug = find_slug("subtheme", original_subtheme)
         if not theme_slug or not subtheme_slug:
+            print(f"Warning: no theme or subtheme found on {bouquet['id']} for {original_theme}/{original_subtheme}, skipping.")
             continue
         theme = compute_tag(theme_slug, "theme")
         subtheme = compute_tag(subtheme_slug, "subtheme")
         if clean_tags:
             tags = [api.es_tag]
         else:
-            tags = *[t for t in bouquet["tags"] if compute_tag("", "theme") not in t and compute_tag("", "subtheme") not in t],
+            excludes = [compute_tag("", "theme"), compute_tag("", "subtheme")]
+            tags = *[t for t in bouquet["tags"] if not any(t.startswith(e) for e in excludes)],
         tags = [
             *tags,
             theme,
@@ -80,8 +84,8 @@ def migrate_bouquets(slug: str = "", dry_run: bool = False, move: bool = False, 
 
 @cli
 def migrate_conf(
-    input_file: Path = Path("ecospheres/migrations/data/themes_old.yaml"),
-    output_file: Path = Path("ecospheres/migrations/data/themes_new.yaml"),
+    input_file: Path = OLD_THEMES,
+    output_file: Path = NEW_THEMES,
 ):
     with input_file.open() as f:
         data = yaml.safe_load(f)
