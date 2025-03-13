@@ -24,14 +24,17 @@ def compute_tag(value: str, prefix: FilterTypes) -> str:
 def find_slug(
     filter: FilterTypes,
     value: str,
+    parent_id: str | None = None,
     themes_file: Path = NEW_THEMES
 ) -> str | None:
     with themes_file.open() as f:
         filters = yaml.safe_load(f)["filters"]["bouquets"]["items"]
 
     try:
-        values = next(f for f in filters if f["id"] == filter)["values"]
-        filter_value = next(v for v in values if v["name"] == value)
+        values = next(
+            f for f in filters if f["id"] == filter
+        )["values"]
+        filter_value = next(v for v in values if v["name"] == value and (parent_id is None or v.get("parent") == parent_id))
         return filter_value["id"]
     except StopIteration:
         print(f"No slug found for {filter} / '{value}', skipping.")
@@ -56,7 +59,7 @@ def migrate_bouquets(slug: str = "", dry_run: bool = False, move: bool = False, 
             print("No theme or subtheme to migrate, skipping.")
             continue
         theme_slug = find_slug("theme", original_theme)
-        subtheme_slug = find_slug("subtheme", original_subtheme)
+        subtheme_slug = find_slug("subtheme", original_subtheme, parent_id=theme_slug)
         if not theme_slug or not subtheme_slug:
             print(f"Warning: no theme or subtheme found on {bouquet['id']} for {original_theme}/{original_subtheme}, skipping.")
             continue
