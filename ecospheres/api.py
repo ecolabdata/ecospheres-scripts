@@ -15,6 +15,7 @@ class DatagouvfrAPI:
         self.config = get_config(env)
         self.base_url: str = self.config["datagouvfr"]["base_url"]
         self.es_tag: str = self.config["universe"]["name"]
+        self.universe_id = self.config["universe"]["topic_id"]
 
         print(f"API ready for {env}")
 
@@ -54,4 +55,4 @@ class DatagouvfrAPI:
         )
         data = r["data"]
         assert len(data) < LIMIT, "Too many bouquets"
-        return data
+        return [t for t in data if t["id"] != self.universe_id]
