@@ -15,7 +15,7 @@ class DatagouvfrAPI:
         self.config = get_config(env)
         self.base_url: str = self.config["datagouvfr"]["base_url"]
         self.es_tag: str = self.config["universe"]["name"]
-        self.universe_topic_id = self.config["universe"]["topic_id"]
+        self.universe_topic_id = self.config["pages"]["datasets"]["universe_query"]["topic"]
 
         print(f"API ready for {env}")
 
