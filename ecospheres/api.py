@@ -30,7 +30,7 @@ class DatagouvfrAPI:
         return requests.get(self.url(endpoint), **kwargs)
 
     def get(self, endpoint: str, **kwargs) -> dict:
-        r = self._get(endpoint, **kwargs)
+        r = self._get(endpoint, **kwargs, headers=self.headers)
         r.raise_for_status()
         return r.json()
 
