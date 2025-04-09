@@ -7,21 +7,29 @@ from ecospheres.config import get_config
 
 class DatagouvfrAPI:
 
-    def __init__(self, env: str):
-        if not (api_key := os.getenv("DATAGOUVFR_API_KEY")):
-            raise Exception("Missing env var DATAGOUVFR_API_KEY.")
-        self.api_key: str = api_key
+    def __init__(self, env: str | None = None, url: str | None = None, authenticated: bool = True):
+        self.api_key: str | None = None
+        if authenticated:
+            if not (api_key := os.getenv("DATAGOUVFR_API_KEY")):
+                raise Exception("Missing env var DATAGOUVFR_API_KEY.")
+            self.api_key = api_key
 
-        self.config = get_config(env)
-        self.base_url: str = self.config["datagouvfr"]["base_url"]
-        self.es_tag: str = self.config["universe"]["name"]
-        self.universe_topic_id = self.config["pages"]["datasets"]["universe_query"]["topic"]
+        if env:
+            self.config = get_config(env)
+            self.base_url: str = self.config["datagouvfr"]["base_url"]
+            self.es_tag: str = self.config["universe"]["name"]
+            self.universe_topic_id = self.config["pages"]["datasets"]["universe_query"]["topic"]
+        if url:
+            self.base_url = url
 
-        print(f"API ready for {env}")
+        if not self.base_url:
+            raise Exception("Missing base_url config.")
+
+        print(f"API ready for {self.base_url}")
 
     @property
     def headers(self):
-        return {"x-api-key": self.api_key}
+        return {"x-api-key": self.api_key} if self.api_key else {}
 
     def url(self, endpoint):
         return f"{self.base_url}{endpoint}"
