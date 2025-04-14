@@ -30,7 +30,7 @@ def migrate_defis(slug: str = "", dry_run: bool = False, move: bool = False, env
             original_subtheme = topic["extras"]["defis"].get("subtheme")
             if not original_theme or not original_subtheme:
                 print("No theme or subtheme to migrate.")
-            tags = [universe_tag, f"{universe_tag}-saison-{season}", *topic["tags"]]
+            tags = list(set([universe_tag, f"{universe_tag}-saison-{season}", *topic["tags"]]))
             payload = {"tags": tags}
             if move:
                 payload["extras"] = topic["extras"]

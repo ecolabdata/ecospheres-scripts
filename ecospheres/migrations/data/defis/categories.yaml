@@ -1,12 +1,27 @@
-saison-1: []
+saison-1:
+  - https://defis.data.gouv.fr/defis/vehicules-electriques
+  - https://defis.data.gouv.fr/defis/carte-scolaire
+  - https://defis.data.gouv.fr/defis/plan-france-relance
+  - https://defis.data.gouv.fr/defis/energie-en-france
+  - https://defis.data.gouv.fr/defis/infrastructures-cyclables
 
-saison-2: []
+saison-2:
+  - https://defis.data.gouv.fr/defis/diagnostics-de-performance-energetique
+  - https://defis.data.gouv.fr/defis/offre-culturelle
+  - https://defis.data.gouv.fr/defis/elections
+  - https://defis.data.gouv.fr/defis/changement-climatique
+  - https://defis.data.gouv.fr/defis/commerces-de-centre-ville
+  - https://defis.data.gouv.fr/defis/vehicules-electriques
+  - https://defis.data.gouv.fr/defis/carte-scolaire
+  - https://defis.data.gouv.fr/defis/energie-en-france
+  - https://defis.data.gouv.fr/defis/infrastructures-cyclables
 
 saison-3:
   - https://defis.data.gouv.fr/defis/diversite-et-inclusion-en-entreprise
   - https://defis.data.gouv.fr/defis/revitalisation-des-petites-villes
-  - https://defis.data.gouv.fr/defis/diagnostics-de-performance-energetique
   - https://defis.data.gouv.fr/defis/les-francaises-et-francais-face-a-linformation
+  - https://defis.data.gouv.fr/defis/changement-climatique
+  - https://defis.data.gouv.fr/defis/diagnostics-de-performance-energetique
   - https://defis.data.gouv.fr/defis/offre-culturelle
   - https://defis.data.gouv.fr/defis/elections
   - https://defis.data.gouv.fr/defis/vehicules-electriques
