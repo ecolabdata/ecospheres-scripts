@@ -5,8 +5,6 @@ from pathlib import Path
 import yaml
 
 from minicli import cli, run
-from slugify import slugify
-from typing import Literal
 
 from ecospheres.api import DatagouvfrAPI
 
@@ -32,7 +30,7 @@ def migrate_defis(slug: str = "", dry_run: bool = False, move: bool = False, env
             original_subtheme = topic["extras"]["defis"].get("subtheme")
             if not original_theme or not original_subtheme:
                 print("No theme or subtheme to migrate.")
-            tags = [universe_tag, f"{universe_tag}-season-{season}", *topic["tags"]]
+            tags = [universe_tag, f"{universe_tag}-saison-{season}", *topic["tags"]]
             payload = {"tags": tags}
             if move:
                 payload["extras"] = topic["extras"]
