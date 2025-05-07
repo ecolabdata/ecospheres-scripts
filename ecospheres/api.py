@@ -17,7 +17,11 @@ class DatagouvfrAPI:
         if env:
             self.config = get_config(env)
             self.base_url: str = self.config["datagouvfr"]["base_url"]
-            self.es_tag: str = self.config["pages"]["bouquets"]["universe_query"]["tag"]
+            if self.config["pages"]["bouquets"]["universe_query"]:
+                self.es_tag: str = self.config["pages"]["bouquets"]["universe_query"]["tag"]
+            else:
+                # FIXME: legacy format, remove when migrated
+                self.es_tag: str = self.config["universe"]["name"]
             self.universe_topic_id = self.config["pages"]["datasets"]["universe_query"]["topic"]
         if url:
             self.base_url = url
