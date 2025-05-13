@@ -88,9 +88,16 @@ def get_schema(payload: dict[str, Any]) -> str | None:
     return f"{label} (version {version})" if version else label
 
 
-@cli
-def export(id_or_slug: str, source: str = "www"):
-    api = DatagouvfrAPI(url=f"http://{source}.data.gouv.fr", authenticated=False)
+@cli("env", choices=["www", "demo"])
+def export(id_or_slug: str, env: str = "www"):
+    """Export a bouquet
+
+    Will export the bouquet in directory `bouquet--{id_or_slug}`.
+
+    :id_or_slug: Identifier or slug of the bouquet
+    :env: Target data.gouv environment
+    """
+    api = DatagouvfrAPI(url=f"http://{env}.data.gouv.fr", authenticated=False)
     bouquet_payload = api.get_bouquet(id_or_slug)
 
     path = Path(f"bouquet--{id_or_slug}")
