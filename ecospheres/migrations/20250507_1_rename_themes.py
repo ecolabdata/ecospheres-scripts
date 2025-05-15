@@ -45,7 +45,7 @@ def migrate_bouquets(slug: str = "", dry_run: bool = False, move: bool = False, 
     bouquets = [b for b in bouquets if b["slug"] == slug] if slug else bouquets
     for bouquet in bouquets:
         print(f"--> Handling {bouquet['slug']}...")
-        tags = migrate_tags(bouquet["tags"], move=move)
+        tags = list(migrate_tags(bouquet["tags"], move=move))
         payload = {"tags": tags}
         if not dry_run:
             api.put(f"/api/1/topics/{bouquet['id']}/", json=payload)
