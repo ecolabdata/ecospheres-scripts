@@ -22,17 +22,16 @@ def compute_tag(radical: str):
     return f"{TAG_PREFIX}-{radical}"
 
 
-def migrate_tags(tags: list[str], move: bool = False) -> list[str]:
+def migrate_tags(tags: list[str], move: bool = False) -> set[str]:
     tag_mapping = {compute_tag(old): compute_tag(new) for old, new in THEMES}
-    new_tags = []
+    new_tags = set()
     for tag in tags:
         if tag in tag_mapping:
-            new_tags.append(tag_mapping[tag])
+            new_tags.add(tag_mapping[tag])
             if not move:
-                new_tags.append(tag)
+                new_tags.add(tag)
         else:
-            new_tags.append(tag)
-
+            new_tags.add(tag)
     return new_tags
 
 
