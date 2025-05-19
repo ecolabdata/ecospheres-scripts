@@ -56,6 +56,10 @@ class DatagouvfrAPI:
         r.raise_for_status()
         return r.json()
 
+    def add_datasets_to_topic(self, topic_id_or_slug: str, dataset_ids: list[str]) -> dict:
+        payload = [{"id": did} for did in dataset_ids]
+        return self.post(f"/api/2/topics/{topic_id_or_slug}/datasets/", json=payload)
+
     def get_bouquet(self, bouquet_id_or_slug: str) -> dict:
         return self.get(f"/api/2/topics/{bouquet_id_or_slug}")
 
