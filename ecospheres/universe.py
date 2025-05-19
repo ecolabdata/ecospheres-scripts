@@ -9,6 +9,10 @@ from ecospheres.api import DatagouvfrAPI
 @cli
 def feed_from_grist(topic_id: str, grist_url: str, table_id: int = 1, url_field_name: str = "URL", env: str = "demo"):
     """
+    Feeds a universe from Grist, i.e. adds datasets to the universe topic.
+
+    TODO: create topics from themes/tags and link datasets to them.
+
     :topic_id:          id of the universe topic
     :grist_url:         https://grist.numerique.gouv.fr/o/fabriquegeocommuns/api/docs/8AxUVpkJACtwE1sVULHn9F
     :table_id:          id of the table in the grist doc
@@ -27,7 +31,7 @@ def feed_from_grist(topic_id: str, grist_url: str, table_id: int = 1, url_field_
            continue
         parsed_url = urlparse(dataset_url)
         if "data.gouv.fr" not in parsed_url.netloc:
-            print(f"Skipping {dataset_url} (not a data.gouv.fr URL)")
+            print(f"Skipping {dataset_url} (not a data.gouv.fr URL).")
             continue
         slug_or_id = parsed_url.path.split("/")[-1] or parsed_url.path.split("/")[-2]
         # try to find the dataset on the target env
