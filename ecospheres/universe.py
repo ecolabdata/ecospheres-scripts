@@ -29,7 +29,6 @@ def feed_from_grist(topic_id: str, grist_url: str, table_id: int = 1, url_field_
         if "data.gouv.fr" not in parsed_url.netloc:
             print(f"Skipping {dataset_url} (not a data.gouv.fr URL)")
             continue
-        # FIXME: remove hash from url (urlparse)
         slug_or_id = parsed_url.path.split("/")[-1] or parsed_url.path.split("/")[-2]
         # try to find the dataset on the target env
         r = requests.get(f"{api.base_url}/api/2/datasets/{slug_or_id}/")
