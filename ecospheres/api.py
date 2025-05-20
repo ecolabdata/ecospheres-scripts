@@ -56,6 +56,10 @@ class DatagouvfrAPI:
         r.raise_for_status()
         return r.json()
 
+    def add_datasets_to_topic(self, topic_id_or_slug: str, dataset_ids: list[str]) -> dict:
+        payload = [{"id": did} for did in dataset_ids]
+        return self.post(f"/api/2/topics/{topic_id_or_slug}/datasets/", json=payload)
+
     def get_bouquet(self, bouquet_id_or_slug: str) -> dict:
         return self.get(f"/api/2/topics/{bouquet_id_or_slug}")
 
@@ -68,3 +72,40 @@ class DatagouvfrAPI:
         data = r["data"]
         assert len(data) < LIMIT, "Too many bouquets"
         return [topic for topic in data if topic["id"] != self.universe_topic_id]
+
+    def update_bouquet(self, bouquet_id: str, name: str, description: str, datasets_properties: list, tags: list[str] = [], extras_key: str = "ecospheres", extras: dict = {}, organization: str | None = None) -> dict:
+        payload = {
+            "name": name,
+            "description": description,
+            # FIXME: will randomly fail? e.g. 6537eaa330451b3d27436a14
+            # "datasets": [d["id"] for d in datasets_properties if d.get("id")],
+            "tags": [self.es_tag, *tags],
+            "organization": organization,
+            "extras": {
+                extras_key: {
+                    "datasets_properties": datasets_properties,
+                    **extras
+                }
+            }
+        }
+        return self.put(f"/api/1/topics/{bouquet_id}/", json=payload)
+
+    def create_bouquet(self, name: str, description: str, datasets_properties: list, tags: list[str] = [], extras_key: str = "ecospheres", extras: dict = {}, organization: str | None = None):
+        payload = {
+            "name": name,
+            "description": description,
+            # FIXME: will randomly fail? e.g. 6537eaa330451b3d27436a14
+            # "datasets": [d["id"] for d in datasets_properties if d.get("id")],
+            "tags": [self.es_tag, *tags],
+            "organization": organization,
+            "extras": {
+                extras_key: {
+                    "datasets_properties": datasets_properties,
+                    **extras
+                }
+            }
+        }
+        return self.post(
+            "/api/1/topics",
+            json=payload,
+        )
