@@ -53,7 +53,6 @@ class DatagouvfrAPI:
 
     def post(self, endpoint: str, **kwargs) -> dict:
         r = requests.post(self.url(endpoint), headers=self.headers, **kwargs)
-        print(r.text)
         r.raise_for_status()
         return r.json()
 
