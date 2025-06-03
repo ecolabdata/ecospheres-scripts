@@ -12,7 +12,7 @@ def copy(slug: str, source: str = "prod", destination: str = "demo"):
     """
     print(f"Copying from {source} to {destination}")
 
-    api_source = DatagouvfrAPI(source)
+    api_source = DatagouvfrAPI(source, authenticated=False)
     api_destination = DatagouvfrAPI(destination)
 
     config_source = api_source.config
@@ -34,7 +34,7 @@ def copy(slug: str, source: str = "prod", destination: str = "demo"):
             raise e
 
     destination_data = {}
-    destination_data["tags"] = [config_destination["universe"]["name"]]
+    destination_data["tags"] = [config_destination["pages"]["bouquets"]["universe_query"]["tag"], *source_data["tags"]]
     destination_data["name"] = source_data["name"]
     destination_data["description"] = source_data["description"]
     destination_data["spatial"] = source_data["spatial"]
@@ -56,8 +56,7 @@ def copy(slug: str, source: str = "prod", destination: str = "demo"):
     destination_data["datasets"] = []
     destination_data["extras"] = {}
     destination_data["extras"]["ecospheres"] = {
-        "theme": source_data["extras"]["ecospheres"]["theme"],
-        "subtheme": source_data["extras"]["ecospheres"]["subtheme"],
+        "group": source_data["extras"]["ecospheres"].get("group"),
     }
     destination_data["extras"]["ecospheres"]["datasets_properties"] = []
     for d in source_data["extras"]["ecospheres"]["datasets_properties"]:
