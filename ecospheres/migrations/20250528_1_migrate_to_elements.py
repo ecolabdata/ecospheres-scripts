@@ -51,7 +51,7 @@ def migrate_bouquets(slug: str = "", dry_run: bool = False, move: bool = False, 
             payload["extras"] = {k: v for k, v in bouquet["extras"].items() if k != site}
 
         if not dry_run:
-            api.put(f"/api/1/topics/{bouquet['id']}/", json=payload)
+            api.put(f"/api/2/topics/{bouquet['id']}/", json=payload)
         else:
             print("Would have updated with:")
             print(json.dumps(payload, indent=2))
