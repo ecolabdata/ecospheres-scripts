@@ -7,6 +7,8 @@ from minicli import cli, run
 from pathlib import Path
 from typing import Any, Optional
 
+import requests
+
 from ecospheres.api import DatagouvfrAPI
 
 
@@ -97,7 +99,7 @@ def export(id_or_slug: str, env: str = "www"):
     :id_or_slug: Identifier or slug of the bouquet
     :env: Target data.gouv environment
     """
-    api = DatagouvfrAPI(url=f"http://{env}.data.gouv.fr", authenticated=False)
+    api = DatagouvfrAPI(url=f"https://{env}.data.gouv.fr", authenticated=False)
     bouquet_payload = api.get_topic(id_or_slug)
 
     path = Path(f"bouquet--{id_or_slug}")
@@ -126,7 +128,13 @@ def export(id_or_slug: str, env: str = "www"):
         )
         bouquet_csv.writerow(asdict(bouquet))
 
-        elements = bouquet_payload["elements"]
+        elements = []
+        elements_url = bouquet_payload["elements"]["href"]
+        while elements_url:
+            payload = requests.get(elements_url).json()
+            elements.extend(payload["data"])
+            elements_url = payload["next_page"]
+
         for factor_index, factor_payload in enumerate(elements, start=1):
             factor = Factor(
                 bouquet_id=bouquet_payload["id"],
@@ -139,7 +147,7 @@ def export(id_or_slug: str, env: str = "www"):
             )
 
             if factor.factor_availability == "url available":
-                factor.dataset_url = factor_payload["uri"]
+                factor.dataset_url = factor_payload["extras"]["ecospheres"]["uri"]
 
             elif factor.factor_availability == "available":
                 dataset_id = factor_payload["element"]["id"]
