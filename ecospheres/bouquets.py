@@ -16,7 +16,7 @@ def copy(slug: str, source: str = "prod", destination: str = "demo", site: str =
     config_source = get_page_config(site, source, page)
     config_destination = get_page_config(site, destination, page)
 
-    api_source = DatagouvfrAPI(config_source["base_url"])
+    api_source = DatagouvfrAPI(config_source["base_url"], authenticated=False)
     api_destination = DatagouvfrAPI(config_source["base_url"])
 
     source_data = api_source.get_topic(slug)
