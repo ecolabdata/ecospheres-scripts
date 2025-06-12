@@ -4,6 +4,7 @@ from minicli import cli, run
 
 from ecospheres.api import DatagouvfrAPI
 from ecospheres.config import get_page_config
+from ecospheres.rel import iter_rel
 
 
 @cli
@@ -16,8 +17,8 @@ def copy(slug: str, source: str = "prod", destination: str = "demo", site: str =
     config_source = get_page_config(site, source, page)
     config_destination = get_page_config(site, destination, page)
 
-    api_source = DatagouvfrAPI(config_source["base_url"], authenticated=False)
-    api_destination = DatagouvfrAPI(config_source["base_url"])
+    api_source = DatagouvfrAPI(config_source.base_url, authenticated=False)
+    api_destination = DatagouvfrAPI(config_source.base_url)
 
     source_data = api_source.get_topic(slug)
 
@@ -35,7 +36,7 @@ def copy(slug: str, source: str = "prod", destination: str = "demo", site: str =
             raise e
 
     destination_data = {}
-    destination_data["tags"] = [config_destination["universe_query"]["tag"], *source_data["tags"]]
+    destination_data["tags"] = [config_destination.universe_query["tag"], *source_data["tags"]]
     destination_data["name"] = source_data["name"]
     destination_data["description"] = source_data["description"]
     destination_data["spatial"] = source_data["spatial"]
@@ -54,12 +55,7 @@ def copy(slug: str, source: str = "prod", destination: str = "demo", site: str =
         else:
             print(f"Organization does not exist on {destination}")
 
-    existing_elements = []
-    existing_elements_url = source_data["elements"]["href"]
-    while existing_elements_url:
-        r = api_source.get(existing_elements_url)
-        existing_elements.extend(r["data"])
-        existing_elements_url = r["next_page"]
+    existing_elements = iter_rel(source_data["elements"], api_source)
 
     destination_data["elements"] = []
     for element in existing_elements:
@@ -69,7 +65,7 @@ def copy(slug: str, source: str = "prod", destination: str = "demo", site: str =
                 print(f"{element_object['id']} not on {destination}, transforming to URL")
                 element["extras"] = {
                     site: {
-                        "uri": f"{config_source['base_url']}/datasets/{element_object['id']}/",
+                        "uri": f"{config_source.base_url}/datasets/{element_object['id']}/",
                         "group": element["extras"][site].get("group"),
                         "availability": "url available",
                     },

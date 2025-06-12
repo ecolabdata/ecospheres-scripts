@@ -1,5 +1,5 @@
+from dataclasses import dataclass
 from pathlib import Path
-from typing import TypedDict
 
 import requests
 import yaml
@@ -31,7 +31,8 @@ def get_config(site: str, env: str) -> dict:
 
     return parsed_data
 
-class PageConfig(TypedDict):
+@dataclass
+class PageConfig:
     site: str
     env: str
     base_url: str
@@ -44,10 +45,10 @@ def get_page_config(site: str, env: str, page: str) -> PageConfig:
     if page not in config["pages"]:
         raise ValueError(f"Unknown page '{page}' for site '{site}'")
     print(f"Loaded config for site '{site}' on env '{env}' and page '{page}'")
-    return {
+    return PageConfig(**{
         "site": site,
         "env": env,
         "base_url": config["datagouvfr"]["base_url"],
         "page": page,
         "universe_query": config["pages"][page]["universe_query"],
-    }
+    })

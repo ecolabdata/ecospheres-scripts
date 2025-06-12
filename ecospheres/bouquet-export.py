@@ -7,9 +7,8 @@ from minicli import cli, run
 from pathlib import Path
 from typing import Any, Optional
 
-import requests
-
 from ecospheres.api import DatagouvfrAPI
+from ecospheres.rel import iter_rel
 
 
 @dataclass
@@ -128,12 +127,7 @@ def export(id_or_slug: str, env: str = "www"):
         )
         bouquet_csv.writerow(asdict(bouquet))
 
-        elements = []
-        elements_url = bouquet_payload["elements"]["href"]
-        while elements_url:
-            payload = requests.get(elements_url).json()
-            elements.extend(payload["data"])
-            elements_url = payload["next_page"]
+        elements = iter_rel(bouquet_payload["elements"], api)
 
         for factor_index, factor_payload in enumerate(elements, start=1):
             factor = Factor(
