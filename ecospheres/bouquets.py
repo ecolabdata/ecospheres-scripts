@@ -3,26 +3,28 @@ import requests
 from minicli import cli, run
 
 from ecospheres.api import DatagouvfrAPI
+from ecospheres.config import get_page_config
+from ecospheres.rel import iter_rel
 
 
 @cli
-def copy(slug: str, source: str = "prod", destination: str = "demo"):
+def copy(slug: str, source: str = "prod", destination: str = "demo", site: str = "ecospheres", page: str = "bouquets"):
     """
     Copy a bouquet from one env to another
     """
     print(f"Copying from {source} to {destination}")
 
-    api_source = DatagouvfrAPI(source, authenticated=False)
-    api_destination = DatagouvfrAPI(destination)
+    config_source = get_page_config(site, source, page)
+    config_destination = get_page_config(site, destination, page)
 
-    config_source = api_source.config
-    config_destination = api_destination.config
+    api_source = DatagouvfrAPI(config_source.base_url, authenticated=False)
+    api_destination = DatagouvfrAPI(config_source.base_url)
 
-    source_data = api_source.get_bouquet(slug)
+    source_data = api_source.get_topic(slug)
 
     existing_id = None
     try:
-        r = api_destination.get_bouquet(slug)
+        r = api_destination.get_topic(slug)
         confirm = input(f"{slug} already exists on {destination}, y to replace: ")
         if confirm.lower() != "y":
             return
@@ -34,7 +36,7 @@ def copy(slug: str, source: str = "prod", destination: str = "demo"):
             raise e
 
     destination_data = {}
-    destination_data["tags"] = [config_destination["pages"]["bouquets"]["universe_query"]["tag"], *source_data["tags"]]
+    destination_data["tags"] = [config_destination.universe_query["tag"], *source_data["tags"]]
     destination_data["name"] = source_data["name"]
     destination_data["description"] = source_data["description"]
     destination_data["spatial"] = source_data["spatial"]
@@ -53,28 +55,28 @@ def copy(slug: str, source: str = "prod", destination: str = "demo"):
         else:
             print(f"Organization does not exist on {destination}")
 
-    destination_data["datasets"] = []
-    destination_data["extras"] = {}
-    destination_data["extras"]["ecospheres"] = {
-        "group": source_data["extras"]["ecospheres"].get("group"),
-    }
-    destination_data["extras"]["ecospheres"]["datasets_properties"] = []
-    for d in source_data["extras"]["ecospheres"]["datasets_properties"]:
-        if d["id"]:
-            r = api_destination._get(f"/api/1/datasets/{d['id']}/")
+    existing_elements = iter_rel(source_data["elements"], api_source)
+
+    destination_data["elements"] = []
+    for element in existing_elements:
+        if element_object := element.get("element"):
+            r = api_destination._get(f"/api/2/datasets/{element_object['id']}/")
             if not r.ok:
-                print(f"{d['id']} not on {destination}, transforming to URL")
-                d["id"] = None
-                d["availability"] = "url available"
-                d["uri"] = f"{config_source['datagouvfr']['base_url']}{d['uri']}"
-            else:
-                destination_data["datasets"].append(d["id"])
-        destination_data["extras"]["ecospheres"]["datasets_properties"].append(d)
+                print(f"{element_object['id']} not on {destination}, transforming to URL")
+                element["extras"] = {
+                    site: {
+                        "uri": f"{config_source.base_url}/datasets/{element_object['id']}/",
+                        "group": element["extras"][site].get("group"),
+                        "availability": "url available",
+                    },
+                    **element["extras"],
+                }
+        destination_data["elements"].append(element)
 
     if existing_id:
-        r = api_destination.put(f"/api/1/topics/{existing_id}/", json=destination_data)
+        r = api_destination.put(f"/api/2/topics/{existing_id}/", json=destination_data)
     else:
-        r = api_destination.post("/api/1/topics/", json=destination_data)
+        r = api_destination.post("/api/2/topics/", json=destination_data)
 
     print(f"Bouquet copied at {r['slug']}")
 

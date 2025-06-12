@@ -2,33 +2,15 @@ import os
 
 import requests
 
-from ecospheres.config import get_config
-
-
 class DatagouvfrAPI:
 
-    def __init__(self, env: str | None = None, url: str | None = None, authenticated: bool = True):
+    def __init__(self, url: str, authenticated: bool = True):
         self.api_key: str | None = None
         if authenticated:
             if not (api_key := os.getenv("DATAGOUVFR_API_KEY")):
                 raise Exception("Missing env var DATAGOUVFR_API_KEY.")
             self.api_key = api_key
-
-        if env:
-            self.config = get_config(env)
-            self.base_url: str = self.config["datagouvfr"]["base_url"]
-            if self.config["pages"]["bouquets"]["universe_query"]:
-                self.es_tag: str = self.config["pages"]["bouquets"]["universe_query"]["tag"]
-            else:
-                # FIXME: legacy format, remove when migrated
-                self.es_tag: str = self.config["universe"]["name"]
-            self.universe_topic_id = self.config["pages"]["datasets"]["universe_query"]["topic"]
-        if url:
-            self.base_url = url
-
-        if not self.base_url:
-            raise Exception("Missing base_url config.")
-
+        self.base_url: str = url
         print(f"API ready for {self.base_url}")
 
     @property
@@ -56,15 +38,18 @@ class DatagouvfrAPI:
         r.raise_for_status()
         return r.json()
 
-    def get_bouquet(self, bouquet_id_or_slug: str) -> dict:
-        return self.get(f"/api/2/topics/{bouquet_id_or_slug}")
+    def get_topic(self, topic_id_or_slug: str) -> dict:
+        return self.get(f"/api/2/topics/{topic_id_or_slug}")
 
-    def get_bouquets(self) -> list:
+    def get_topics(self, universe_tag: str, include_private: bool = True) -> list:
         LIMIT = 100
+        params = {"tag": universe_tag, "page_size": LIMIT}
+        if include_private:
+            params["include_private"] = "yes"
         r = self.get(
             "/api/2/topics",
-            params={"include_private": "yes", "tag": self.es_tag, "page_size": LIMIT},
+            params=params,
         )
         data = r["data"]
-        assert len(data) < LIMIT, "Too many bouquets"
-        return [topic for topic in data if topic["id"] != self.universe_topic_id]
+        assert len(data) < LIMIT, "Too many topics"
+        return data
