@@ -1,14 +1,14 @@
 import csv
-import requests
 
 from collections.abc import Sequence, Mapping
 from dataclasses import asdict, dataclass, fields
 from datetime import datetime
 from minicli import cli, run
 from pathlib import Path
-from typing import Any, cast
+from typing import Any, Optional
 
 from ecospheres.api import DatagouvfrAPI
+from ecospheres.rel import iter_rel
 
 
 @dataclass
@@ -25,6 +25,7 @@ class Bouquet:
 @dataclass
 class Factor:
     bouquet_id: str
+    factor_id: str
     factor_index: int
     factor_group: str | None
     factor_availability: str
@@ -60,7 +61,7 @@ def fieldnames(class_or_instance) -> list[str]:
     return [field.name for field in fields(class_or_instance)]
 
 
-def maybe_get(payload: Mapping | Sequence, *path):
+def maybe_get(payload: Mapping | Sequence, *path) -> Optional[Any]:
     for p in path:
         if not hasattr(payload, "__getitem__"):
             return None
@@ -70,7 +71,7 @@ def maybe_get(payload: Mapping | Sequence, *path):
             return None
         if not payload:
             return None
-    return payload
+    return payload  # type: ignore
 
 
 def get_author(payload: dict[str, Any]) -> dict[str, Any]:
@@ -97,12 +98,12 @@ def export(id_or_slug: str, env: str = "www"):
     :id_or_slug: Identifier or slug of the bouquet
     :env: Target data.gouv environment
     """
-    api = DatagouvfrAPI(url=f"http://{env}.data.gouv.fr", authenticated=False)
-    bouquet_payload = api.get_bouquet(id_or_slug)
+    api = DatagouvfrAPI(url=f"https://{env}.data.gouv.fr", authenticated=False)
+    bouquet_payload = api.get_topic(id_or_slug)
 
     path = Path(f"bouquet--{id_or_slug}")
     path.mkdir(exist_ok=False)
-    
+
     with (open(path.joinpath("bouquet.csv"), "w") as bouquet_file,
           open(path.joinpath("factors.csv"), mode="w") as factors_file,
           open(path.joinpath("resources.csv"), mode="w") as resources_file):
@@ -125,23 +126,25 @@ def export(id_or_slug: str, env: str = "www"):
             bouquet_spatial_coverage=maybe_get(bouquet_payload, "spatial", "zones", 0)
         )
         bouquet_csv.writerow(asdict(bouquet))
-        
-        datasets_properties = bouquet_payload["extras"]["ecospheres"]["datasets_properties"]
-        for factor_index, factor_payload in enumerate(datasets_properties, start=1):
+
+        elements = iter_rel(bouquet_payload["elements"], api)
+
+        for factor_index, factor_payload in enumerate(elements, start=1):
             factor = Factor(
                 bouquet_id=bouquet_payload["id"],
+                factor_id=factor_payload["id"],
                 factor_index=factor_index,
-                factor_group=factor_payload.get("group"),
-                factor_availability=factor_payload["availability"],
+                factor_group=factor_payload["extras"]["ecospheres"].get("group"),
+                factor_availability=factor_payload["extras"]["ecospheres"]["availability"],
                 factor_title=factor_payload["title"],
-                factor_purpose=factor_payload["purpose"],
+                factor_purpose=factor_payload["description"],
             )
 
             if factor.factor_availability == "url available":
-                factor.dataset_url = factor_payload["uri"]
+                factor.dataset_url = factor_payload["extras"]["ecospheres"]["uri"]
 
             elif factor.factor_availability == "available":
-                dataset_id = factor_payload["id"]
+                dataset_id = factor_payload["element"]["id"]
                 dataset_payload = api.get(f"/api/1/datasets/{dataset_id}")
                 dataset_author = get_author(dataset_payload)
                 factor.dataset_id = dataset_id
@@ -149,12 +152,12 @@ def export(id_or_slug: str, env: str = "www"):
                 factor.dataset_title = dataset_payload["title"]
                 factor.dataset_author_name = dataset_author["name"]
                 factor.dataset_author_page = dataset_author["page"]
-                # factor.dataset_responsible_parties = 
+                # factor.dataset_responsible_parties =
                 factor.dataset_last_modified = datetime.fromisoformat(dataset_payload["last_modified"])
                 factor.dataset_license = dataset_payload.get("license")
-                # factor.dataset_spatial_coverage = 
-                # factor.dataset_temporal_coverage = 
-                # factor.dataset_update_frequency = 
+                # factor.dataset_spatial_coverage =
+                # factor.dataset_temporal_coverage =
+                # factor.dataset_update_frequency =
                 factor.dataset_schema = get_schema(dataset_payload)
                 factor.dataset_quality_score = maybe_get(dataset_payload, "quality", "score")
 
