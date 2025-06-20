@@ -45,10 +45,10 @@ def get_page_config(site: str, env: str, page: str) -> PageConfig:
     if page not in config["pages"]:
         raise ValueError(f"Unknown page '{page}' for site '{site}'")
     print(f"Loaded config for site '{site}' on env '{env}' and page '{page}'")
-    return PageConfig(**{
-        "site": site,
-        "env": env,
-        "base_url": config["datagouvfr"]["base_url"],
-        "page": page,
-        "universe_query": config["pages"][page]["universe_query"],
-    })
+    return PageConfig(
+        site = site,
+        env = env,
+        base_url = config["datagouvfr"]["base_url"],
+        page = page,
+        universe_query = config["pages"][page]["universe_query"],
+    )
