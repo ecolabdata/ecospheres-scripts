@@ -13,8 +13,8 @@ def migrate_bouquets(slug: str = "", dry_run: bool = False, move: bool = False, 
     Should work for all sites, given the correct conf.
     """
     config = get_page_config(site, env, page)
-    api = DatagouvfrAPI(config["base_url"])
-    bouquets = api.get_topics(config["universe_query"]["tag"])
+    api = DatagouvfrAPI(config.base_url)
+    bouquets = api.get_topics(config.universe_query["tag"])
     bouquets = [b for b in bouquets if b["slug"] == slug] if slug else bouquets
     for bouquet in bouquets:
         print(f"--> Handling {bouquet['slug']}...")
