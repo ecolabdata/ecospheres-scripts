@@ -40,7 +40,11 @@ def migrate_bouquets(slug: str = "", dry_run: bool = False, move: bool = False, 
             }
             # reference to data.gouv.fr dataset
             if factor["availability"] == "available":
-                element["element"] = {"class": "Dataset", "id": factor["id"]}
+                r = api._get(f"/api/2/datasets/{factor['id']}")
+                if not r.ok:
+                    print(f"⚠ Dataset {factor['id']} not found ({r.status_code}), skipping.")
+                else:
+                    element["element"] = {"class": "Dataset", "id": factor["id"]}
             elements.append(element)
 
         payload = {
