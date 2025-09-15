@@ -4,6 +4,7 @@ from minicli import cli, run
 
 from ecospheres.api import DatagouvfrAPI
 from ecospheres.config import get_page_config
+from ecospheres.rel import iter_rel
 
 
 @cli
@@ -27,10 +28,7 @@ def fix_group_migration(slug: str = "", dry_run: bool = False, env: str = "demo"
     for topic in topics:
         print(f"--> Handling {topic['slug']}...")
 
-        elements_data = api.get(f"/api/2/topics/{topic['id']}/elements/")
-        elements = elements_data.get("data", [])
-
-        # Check if any elements need fixing
+        elements = list(iter_rel(topic["elements"], api))
         elements_fixed = False
         updated_elements = []
 
@@ -39,7 +37,7 @@ def fix_group_migration(slug: str = "", dry_run: bool = False, env: str = "demo"
             if not site_extras:
                 continue
 
-            group_value = site_extras.get("group")
+            group_value = site_extras.get("group", False)
 
             # Check if group needs fixing
             if group_value is None or group_value == "Sans regroupement":
