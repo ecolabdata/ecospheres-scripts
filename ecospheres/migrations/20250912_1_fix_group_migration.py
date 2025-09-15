@@ -44,8 +44,7 @@ def fix_group_migration(slug: str = "", dry_run: bool = False, env: str = "demo"
                 print(f"  Fixing element '{element.get('title', 'Untitled')}': group={repr(group_value)} -> undefined")
                 elements_fixed = True
                 # Remove the group property entirely (equivalent to undefined in JS)
-                if "group" in element["extras"][site]:
-                    del element["extras"][site]["group"]
+                del element["extras"][site]["group"]
             updated_elements.append(element)
 
         if elements_fixed:
