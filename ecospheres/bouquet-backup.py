@@ -1,5 +1,5 @@
 import json
-import os
+from datetime import datetime
 from pathlib import Path
 from minicli import cli, run
 
@@ -24,7 +24,7 @@ def backup(env: str, site: str = "ecospheres", page: str = "bouquets"):
     api = DatagouvfrAPI(config.base_url, authenticated=True)
 
     # Create backup directory
-    backup_dir = Path("backup") / site / env
+    backup_dir = Path("backup") / site / env / datetime.now().strftime("%Y%m%d_%H%M%S")
     backup_dir.mkdir(parents=True, exist_ok=True)
 
     # Get all bouquets including private ones
