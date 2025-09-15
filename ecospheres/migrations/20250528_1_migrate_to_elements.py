@@ -33,12 +33,13 @@ def migrate_bouquets(slug: str = "", dry_run: bool = False, move: bool = False, 
                 "extras": {
                     site: {
                         "uri": factor.get("uri"),
-                        "group": factor.get("group"),
                         "availability": factor["availability"],
                     }
                 }
             }
-            # reference to data.gouv.fr dataset
+            # Add group only if it exists
+            if g := factor.get("group"):
+                element["extras"][site]["group"] = g  # reference to data.gouv.fr dataset
             if factor["availability"] == "available":
                 r = api._get(f"/api/2/datasets/{factor['id']}")
                 if not r.ok:
