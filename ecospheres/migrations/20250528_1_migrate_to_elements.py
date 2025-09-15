@@ -33,14 +33,19 @@ def migrate_bouquets(slug: str = "", dry_run: bool = False, move: bool = False, 
                 "extras": {
                     site: {
                         "uri": factor.get("uri"),
-                        "group": factor.get("group"),
                         "availability": factor["availability"],
                     }
                 }
             }
-            # reference to data.gouv.fr dataset
+            # Add group only if it exists
+            if g := factor.get("group"):
+                element["extras"][site]["group"] = g  # reference to data.gouv.fr dataset
             if factor["availability"] == "available":
-                element["element"] = {"class": "Dataset", "id": factor["id"]}
+                r = api._get(f"/api/2/datasets/{factor['id']}")
+                if not r.ok:
+                    print(f"⚠ Dataset {factor['id']} not found ({r.status_code}), skipping.")
+                else:
+                    element["element"] = {"class": "Dataset", "id": factor["id"]}
             elements.append(element)
 
         payload = {

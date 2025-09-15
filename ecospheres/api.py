@@ -21,7 +21,7 @@ class DatagouvfrAPI:
         return f"{self.base_url}{endpoint}"
 
     def _get(self, endpoint: str, **kwargs):
-        return requests.get(self.url(endpoint), **kwargs)
+        return requests.get(endpoint if "://" in endpoint else self.url(endpoint), **kwargs)
 
     def get(self, endpoint: str, **kwargs) -> dict:
         r = self._get(endpoint, **kwargs, headers=self.headers)
